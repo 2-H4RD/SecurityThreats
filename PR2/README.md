@@ -56,9 +56,13 @@ vszub24@yandex.ru
 
 ### Установка пакета dplyr, загрузка датасета.
 
-> install.packages(“dplyr”) WARNING: Rtools is required to build R
-> packages but is not currently installed. Please download and install
-> the appropriate version of Rtools before proceeding:
+``` r
+> install.packages("dplyr")\
+```
+
+> WARNING: Rtools is required to build R packages but is not currently
+> installed. Please download and install the appropriate version of
+> Rtools before proceeding:
 
 https://cran.rstudio.com/bin/windows/Rtools/ Устанавливаю пакет в
 ‘D:/Rlib’ (потому что ‘lib’ не определено) пробую URL
@@ -75,29 +79,40 @@ library(dplyr)
 
 Следующие объекты скрыты от ‘package:stats’:
 
-    filter, lag
+filter, lag
 
 Следующие объекты скрыты от ‘package:base’:
 
-    intersect, setdiff, setequal, union
+intersect, setdiff, setequal, union
 
+``` r
 > data(starwars)
+```
 
 ### Анализ датасета и ответы на вопросы
 
 #### Сколько строк в датафрейме?
 
-> nrow(starwars)  
+``` r
+nrow(starwars)
+```
+
 > \[1\] 87
 
 #### Сколько столбцов в датафрейме?
 
-> ncol(starwars)  
+``` r
+ncol(starwars)
+```
+
 > \[1\] 14
 
 #### Как просмотреть примерный вид датафрейма?
 
-> glimpse(starwars)  
+``` r
+glimpse(starwars)
+```
+
 > Rows: 87 Columns: 14 $ name <chr> “Luke Skywalker”, “C-3PO”, “R2-D2”,
 > “Darth Vader”, “Leia Organa”, “Owen Lars”, “Beru Whitesun … $ height
 > <int> 172, 167, 96, 202, 150, 178, 165, 97, 183, 182, 188, 180, 228,
@@ -126,25 +141,34 @@ library(dplyr)
 
 #### Сколько уникальных рас персонажей (species) представлено в данных?
 
-> starwars %\>% distinct(species) %\>% nrow()  
+``` r
+starwars %\>% distinct(species) %\>% nrow()
+```
+
 > \[1\] 38
 
 #### Найти самого высокого персонажа.
 
-> starwars %\>%  
-> + filter(height == max(height,na.rm = TRUE)) %\>%  
-> + pull(name)  
+``` r
+starwars %\>%
+  filter(height == max(height,na.rm = TRUE)) %\>%
+  pull(name)
+```
+
 > \[1\] “Yarael Poof”
 
 #### Найти всех персонажей ниже 170
 
-> starwars %\>%  
-> + filter(height \< 170) %\>%  
-> + select(name, height) %\>%  
-> + mutate(row_number = row_number())%\>%  
-> + select(row_number, name, height) %\>%  
-> + as.matrix() %\>%  
-> + head(10)  
+``` r
+starwars %\>%
+  filter(height \< 170) %\>%
+  select(name, height) %\>%
+  mutate(row_number = row_number())%\>%
+  select(row_number, name, height) %\>%
+  as.matrix() %\>%
+  head(10)
+```
+
 > row_number name height  
 > \[1,\] ” 1” “C-3PO” “167”  
 > \[2,\] ” 2” “R2-D2” ” 96”  
@@ -159,11 +183,14 @@ library(dplyr)
 
 #### Подсчитать ИМТ (индекс массы тела) для всех персонажей. ИМТ подсчитать по формулe$I=\frac{m}{h^2}$, где 𝑚 – масса (weight), а ℎ – рост (height).
 
-> starwars %\>%  
-> + mutate(height_m = height / 100,bmi = mass / (height_m)^2) %\>%  
-> + select(name, mass, height, bmi) %\>%  
-> + as.matrix() %\>%  
-> + head(10)  
+``` r
+starwars %\>%
+  mutate(height_m = height / 100,bmi = mass / (height_m)\^2) %\>%
+  select(name, mass, height, bmi) %\>%\
+  as.matrix() %\>%\
+  head(10)
+```
+
 > name mass height bmi   
 > \[1,\] “Luke Skywalker” ” 77.0” “172” ” 26.02758”  
 > \[2,\] “C-3PO” ” 75.0” “167” ” 26.89232”  
@@ -178,14 +205,18 @@ library(dplyr)
 
 #### Найти 10 самых “вытянутых” персонажей. “Вытянутость” оценить по отношению массы (mass) к росту (height) персонажей.
 
-> starwars %\>% + mutate(stretch_ratio = mass / height) %\>%  
-> + filter(!is.na(stretch_ratio)) %\>%  
-> + arrange(desc(stretch_ratio)) %\>%  
-> + head(10) %\>%  
-> + select(name, mass, height, stretch_ratio) %\>%  
-> + mutate(row_number = row_number()) %\>%  
-> + select(row_number, name, mass, height, stretch_ratio) %\>%  
-> + as.matrix()  
+``` r
+starwars %\>% 
+ mutate(stretch_ratio = mass / height) %\>%
+ filter(!is.na(stretch_ratio)) %\>%
+ arrange(desc(stretch_ratio)) %\>%
+ head(10) %\>%
+ select(name, mass, height, stretch_ratio) %\>%
+ mutate(row_number = row_number()) %\>%
+ select(row_number, name, mass, height, stretch_ratio) %\>%
+ as.matrix()
+```
+
 > row_number name mass height stretch_ratio  
 > \[1,\] ” 1” “Jabba Desilijic Tiure” “1358” “175” “7.7600000”   
 > \[2,\] ” 2” “Grievous” ” 159” “216” “0.7361111”   
@@ -200,15 +231,17 @@ library(dplyr)
 
 #### Найти средний возраст персонажей каждой расы вселенной Звездных войн.
 
-> starwars %\>%  
-> + mutate(current_year = 100,age = current_year + birth_year) %\>%  
-> + filter(!is.na(age) & !is.na(species)) %\>%  
-> + group_by(species) %\>%  
-> + summarise(average_age = mean(age),count = n()) %\>%  +
-> arrange(desc(average_age)) %\>%  
-> + mutate(row_number = row_number()) %\>%  
-> + select(row_number, species, average_age, count) %\>%  
-> + as.matrix()  
+``` r
+starwars %\>%
+ mutate(current_year = 100,age = current_year + birth_year) %\>%
+ filter(!is.na(age) & !is.na(species)) %\>%
+ group_by(species) %\>%
+ summarise(average_age = mean(age),count = n()) %\>%  + arrange(desc(average_age)) %\>%
+ mutate(row_number = row_number()) %\>%
+ select(row_number, species, average_age, count) %\>%
+ as.matrix()
+```
+
 > row_number species average_age count  
 > \[1,\] ” 1” “Yoda’s species” “996.0000” ” 1”  
 > \[2,\] ” 2” “Hutt” “700.0000” ” 1”   
@@ -228,25 +261,30 @@ library(dplyr)
 
 #### Найти самый распространенный цвет глаз персонажей вселенной Звездных войн.
 
-> starwars %\>%  
-> + count(eye_color, sort = TRUE) %\>%  
-> + filter(!is.na(eye_color)) %\>%  
-> + slice(1) %\>%  
-> + pull(eye_color)  
+``` r
+starwars %\>%
+ count(eye_color, sort = TRUE) %\>%
+ filter(!is.na(eye_color)) %\>%
+ slice(1) %\>%
+ pull(eye_color)
+```
+
 > \[1\] “brown”
 
 #### Подсчитать среднюю длину имени в каждой расе вселенной Звездных войн.
 
-> starwars %\>%  
-> + mutate(name_length = nchar(name)) %\>%  
-> + filter(!is.na(species)) %\>%  
-> + group_by(species) %\>%  
-> + summarise(avg_name_length = mean(name_length, na.rm = TRUE),count =
-> n()) %\>%  
-> + arrange(desc(avg_name_length)) %\>%  
-> + mutate(row_number = row_number()) %\>%  
-> + select(row_number, species, avg_name_length, count) %\>%  
-> + as.matrix()  
+``` r
+starwars %\>%
+  mutate(name_length = nchar(name)) %\>%
+  filter(!is.na(species)) %\>%
+  group_by(species) %\>%
+  summarise(avg_name_length = mean(name_length, na.rm = TRUE),count = n()) %\>%
+  arrange(desc(avg_name_length)) %\>%
+  mutate(row_number = row_number()) %\>%
+  select(row_number, species, avg_name_length, count) %\>%
+  as.matrix()
+```
+
 > row_number species avg_name_length count  
 > \[1,\] ” 1” “Ewok” “21.000000” ” 1”   
 > \[2,\] ” 2” “Hutt” “21.000000” ” 1”   
