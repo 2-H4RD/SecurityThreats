@@ -57,7 +57,7 @@ vszub24@yandex.ru
 ### Установка пакета dplyr, загрузка датасета.
 
 ``` r
-> install.packages("dplyr")\
+install.packages("dplyr")
 ```
 
 > WARNING: Rtools is required to build R packages but is not currently
@@ -86,7 +86,7 @@ filter, lag
 intersect, setdiff, setequal, union
 
 ``` r
-> data(starwars)
+data(starwars)
 ```
 
 ### Анализ датасета и ответы на вопросы
