@@ -142,7 +142,7 @@ glimpse(starwars)
 #### Сколько уникальных рас персонажей (species) представлено в данных?
 
 ``` r
-starwars %\>% distinct(species) %\>% nrow()
+starwars %>% distinct(species) %>% nrow()
 ```
 
 > \[1\] 38
@@ -150,8 +150,8 @@ starwars %\>% distinct(species) %\>% nrow()
 #### Найти самого высокого персонажа.
 
 ``` r
-starwars %\>%
-  filter(height == max(height,na.rm = TRUE)) %\>%
+starwars %>%
+  filter(height == max(height,na.rm = TRUE)) %>%
   pull(name)
 ```
 
@@ -160,12 +160,12 @@ starwars %\>%
 #### Найти всех персонажей ниже 170
 
 ``` r
-starwars %\>%
-  filter(height \< 170) %\>%
-  select(name, height) %\>%
-  mutate(row_number = row_number())%\>%
-  select(row_number, name, height) %\>%
-  as.matrix() %\>%
+starwars %>%
+  filter(height < 170) %>%
+  select(name, height) %>%
+  mutate(row_number = row_number())%>%
+  select(row_number, name, height) %>%
+  as.matrix() %>%
   head(10)
 ```
 
@@ -184,10 +184,10 @@ starwars %\>%
 #### Подсчитать ИМТ (индекс массы тела) для всех персонажей. ИМТ подсчитать по формулe$I=\frac{m}{h^2}$, где 𝑚 – масса (weight), а ℎ – рост (height).
 
 ``` r
-starwars %\>%
-  mutate(height_m = height / 100,bmi = mass / (height_m)\^2) %\>%
-  select(name, mass, height, bmi) %\>%\
-  as.matrix() %\>%\
+starwars %>%
+  mutate(height_m = height / 100,bmi = mass / (height_m)^2) %>%
+  select(name, mass, height, bmi) %>%
+  as.matrix() %>%
   head(10)
 ```
 
@@ -206,14 +206,14 @@ starwars %\>%
 #### Найти 10 самых “вытянутых” персонажей. “Вытянутость” оценить по отношению массы (mass) к росту (height) персонажей.
 
 ``` r
-starwars %\>% 
- mutate(stretch_ratio = mass / height) %\>%
- filter(!is.na(stretch_ratio)) %\>%
- arrange(desc(stretch_ratio)) %\>%
- head(10) %\>%
- select(name, mass, height, stretch_ratio) %\>%
- mutate(row_number = row_number()) %\>%
- select(row_number, name, mass, height, stretch_ratio) %\>%
+starwars %>% 
+ mutate(stretch_ratio = mass / height) %>%
+ filter(!is.na(stretch_ratio)) %>%
+ arrange(desc(stretch_ratio)) %>%
+ head(10) %>%
+ select(name, mass, height, stretch_ratio) %>%
+ mutate(row_number = row_number()) %>%
+ select(row_number, name, mass, height, stretch_ratio) %>%
  as.matrix()
 ```
 
@@ -232,13 +232,13 @@ starwars %\>%
 #### Найти средний возраст персонажей каждой расы вселенной Звездных войн.
 
 ``` r
-starwars %\>%
- mutate(current_year = 100,age = current_year + birth_year) %\>%
- filter(!is.na(age) & !is.na(species)) %\>%
- group_by(species) %\>%
- summarise(average_age = mean(age),count = n()) %\>%  + arrange(desc(average_age)) %\>%
- mutate(row_number = row_number()) %\>%
- select(row_number, species, average_age, count) %\>%
+starwars %>%
+ mutate(current_year = 100,age = current_year + birth_year) %>%
+ filter(!is.na(age) & !is.na(species)) %>%
+ group_by(species) %>%
+ summarise(average_age = mean(age),count = n()) %>%  + arrange(desc(average_age)) %>%
+ mutate(row_number = row_number()) %>%
+ select(row_number, species, average_age, count) %>%
  as.matrix()
 ```
 
@@ -262,10 +262,10 @@ starwars %\>%
 #### Найти самый распространенный цвет глаз персонажей вселенной Звездных войн.
 
 ``` r
-starwars %\>%
- count(eye_color, sort = TRUE) %\>%
- filter(!is.na(eye_color)) %\>%
- slice(1) %\>%
+starwars %>%
+ count(eye_color, sort = TRUE) %>%
+ filter(!is.na(eye_color)) %>%
+ slice(1) %>%
  pull(eye_color)
 ```
 
@@ -274,14 +274,14 @@ starwars %\>%
 #### Подсчитать среднюю длину имени в каждой расе вселенной Звездных войн.
 
 ``` r
-starwars %\>%
-  mutate(name_length = nchar(name)) %\>%
-  filter(!is.na(species)) %\>%
-  group_by(species) %\>%
-  summarise(avg_name_length = mean(name_length, na.rm = TRUE),count = n()) %\>%
-  arrange(desc(avg_name_length)) %\>%
-  mutate(row_number = row_number()) %\>%
-  select(row_number, species, avg_name_length, count) %\>%
+starwars %>%
+  mutate(name_length = nchar(name)) %>%
+  filter(!is.na(species)) %>%
+  group_by(species) %>%
+  summarise(avg_name_length = mean(name_length, na.rm = TRUE),count = n()) %>%
+  arrange(desc(avg_name_length)) %>%
+  mutate(row_number = row_number()) %>%
+  select(row_number, species, avg_name_length, count) %>%
   as.matrix()
 ```
 
