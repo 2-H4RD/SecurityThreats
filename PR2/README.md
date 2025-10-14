@@ -57,33 +57,41 @@ vszub24@yandex.ru
 ### Установка пакета dplyr, загрузка датасета.
 
 ``` r
+options(repos = c(CRAN = "https://cloud.r-project.org"))
 install.packages("dplyr")
 ```
 
-> WARNING: Rtools is required to build R packages but is not currently
-> installed. Please download and install the appropriate version of
-> Rtools before proceeding:
->
-> https://cran.rstudio.com/bin/windows/Rtools/ Устанавливаю пакет в
-> ‘D:/Rlib’ (потому что ‘lib’ не определено) пробую URL
-> ‘https://mirror.truenetwork.ru/CRAN/bin/windows/contrib/4.5/dplyr_1.1.4.zip’
-> Content type ‘application/zip’ length 1593077 bytes (1.5 MB)
-> downloaded 1.5 MB
->
-> пакет ‘dplyr’ успешно распакован, MD5-суммы проверены
->
-> Скачанные бинарные пакеты находятся в D:\_packages \>  
-> library(dplyr)
->
-> Присоединяю пакет: ‘dplyr’
->
-> Следующие объекты скрыты от ‘package:stats’:
->
-> filter, lag
->
-> Следующие объекты скрыты от ‘package:base’:
->
-> intersect, setdiff, setequal, union
+    Устанавливаю пакет в 'D:/Rlib'
+    (потому что 'lib' не определено)
+
+    пакет 'dplyr' успешно распакован, MD5-суммы проверены
+
+    Warning: не могу удалить прежнюю установку пакета 'dplyr'
+
+    Warning in file.copy(savedcopy, lib, recursive = TRUE): проблема с копированием
+    D:\Rlib\00LOCK\dplyr\libs\x64\dplyr.dll в D:\Rlib\dplyr\libs\x64\dplyr.dll:
+    Permission denied
+
+    Warning: восстановлен 'dplyr'
+
+
+    Скачанные бинарные пакеты находятся в
+        D:\Rtemp\RtmpQZTjS0\downloaded_packages
+
+``` r
+library(dplyr)
+```
+
+
+    Присоединяю пакет: 'dplyr'
+
+    Следующие объекты скрыты от 'package:stats':
+
+        filter, lag
+
+    Следующие объекты скрыты от 'package:base':
+
+        intersect, setdiff, setequal, union
 
 ``` r
 data(starwars)
@@ -97,7 +105,7 @@ data(starwars)
 nrow(starwars)
 ```
 
-> \[1\] 87
+    [1] 87
 
 #### Сколько столбцов в датафрейме?
 
@@ -105,7 +113,7 @@ nrow(starwars)
 ncol(starwars)
 ```
 
-> \[1\] 14
+    [1] 14
 
 #### Как просмотреть примерный вид датафрейма?
 
@@ -113,31 +121,22 @@ ncol(starwars)
 glimpse(starwars)
 ```
 
-> Rows: 87 Columns: 14 $ name <chr> “Luke Skywalker”, “C-3PO”, “R2-D2”,
-> “Darth Vader”, “Leia Organa”, “Owen Lars”, “Beru Whitesun … $ height
-> <int> 172, 167, 96, 202, 150, 178, 165, 97, 183, 182, 188, 180, 228,
-> 180, 173, 175, 170, 180, 66, 17… $ mass <dbl> 77.0, 75.0, 32.0, 136.0,
-> 49.0, 120.0, 75.0, 32.0, 84.0, 77.0, 84.0, NA, 112.0, 80.0, 74.0, 135…
-> $ hair_color <chr>”blond”, NA, NA, “none”, “brown”, “brown, grey”,
-> “brown”, NA, “black”, “auburn, white”, “blond… $ skin_color
-> <chr>”fair”, “gold”, “white, blue”, “white”, “light”, “light”,
-> “light”, “white, red”, “light”, “fai… $ eye_color <chr>”blue”,
-> “yellow”, “red”, “yellow”, “brown”, “blue”, “blue”, “red”, “brown”,
-> “blue-gray”, “blue… $ birth_year <dbl> 19.0, 112.0, 33.0, 41.9, 19.0,
-> 52.0, 47.0, NA, 24.0, 57.0, 41.9, 64.0, 200.0, 29.0, 44.0, 600.… $ sex
-> <chr>”male”, “none”, “none”, “male”, “female”, “male”, “female”,
-> “none”, “male”, “male”, “male”, “m… $ gender <chr>”masculine”,
-> “masculine”, “masculine”, “masculine”, “feminine”, “masculine”,
-> “feminine”, “masc… $ homeworld <chr>”Tatooine”, “Tatooine”, “Naboo”,
-> “Tatooine”, “Alderaan”, “Tatooine”, “Tatooine”, “Tatooine”, “… $
-> species <chr>”Human”, “Droid”, “Droid”, “Human”, “Human”, “Human”,
-> “Human”, “Droid”, “Human”, “Human”, “Hum… $ films <list> \<”A New
-> Hope”, “The Empire Strikes Back”, “Return of the Jedi”, “Revenge of
-> the Sith”, “The F… $ vehicles <list> \<”Snowspeeder”, “Imperial
-> Speeder Bike”\>, \<\>, \<\>, \<\>, “Imperial Speeder Bike”, \<\>,
-> \<\>, \<\>, \<\>… $ starships <list> \<“X-wing”, “Imperial shuttle”\>,
-> \<\>, \<\>, “TIE Advanced x1”, \<\>, \<\>, \<\>, \<\>, “X-wing”,
-> \<“Jedi s…
+    Rows: 87
+    Columns: 14
+    $ name       <chr> "Luke Skywalker", "C-3PO", "R2-D2", "Darth Vader", "Leia Or…
+    $ height     <int> 172, 167, 96, 202, 150, 178, 165, 97, 183, 182, 188, 180, 2…
+    $ mass       <dbl> 77.0, 75.0, 32.0, 136.0, 49.0, 120.0, 75.0, 32.0, 84.0, 77.…
+    $ hair_color <chr> "blond", NA, NA, "none", "brown", "brown, grey", "brown", N…
+    $ skin_color <chr> "fair", "gold", "white, blue", "white", "light", "light", "…
+    $ eye_color  <chr> "blue", "yellow", "red", "yellow", "brown", "blue", "blue",…
+    $ birth_year <dbl> 19.0, 112.0, 33.0, 41.9, 19.0, 52.0, 47.0, NA, 24.0, 57.0, …
+    $ sex        <chr> "male", "none", "none", "male", "female", "male", "female",…
+    $ gender     <chr> "masculine", "masculine", "masculine", "masculine", "femini…
+    $ homeworld  <chr> "Tatooine", "Tatooine", "Naboo", "Tatooine", "Alderaan", "T…
+    $ species    <chr> "Human", "Droid", "Droid", "Human", "Human", "Human", "Huma…
+    $ films      <list> <"A New Hope", "The Empire Strikes Back", "Return of the J…
+    $ vehicles   <list> <"Snowspeeder", "Imperial Speeder Bike">, <>, <>, <>, "Imp…
+    $ starships  <list> <"X-wing", "Imperial shuttle">, <>, <>, "TIE Advanced x1",…
 
 #### Сколько уникальных рас персонажей (species) представлено в данных?
 
@@ -145,7 +144,7 @@ glimpse(starwars)
 starwars %>% distinct(species) %>% nrow()
 ```
 
-> \[1\] 38
+    [1] 38
 
 #### Найти самого высокого персонажа.
 
@@ -155,7 +154,7 @@ starwars %>%
   pull(name)
 ```
 
-> \[1\] “Yarael Poof”
+    [1] "Yarael Poof"
 
 #### Найти всех персонажей ниже 170
 
@@ -165,21 +164,22 @@ starwars %>%
   select(name, height) %>%
   mutate(row_number = row_number())%>%
   select(row_number, name, height) %>%
-  as.matrix() %>%
   head(10)
 ```
 
-> row_number name height  
-> \[1,\] ” 1” “C-3PO” “167”  
-> \[2,\] ” 2” “R2-D2” ” 96”  
-> \[3,\] ” 3” “Leia Organa” “150”  
-> \[4,\] ” 4” “Beru Whitesun Lars” “165”  
-> \[5,\] ” 5” “R5-D4” ” 97”  
-> \[6,\] ” 6” “Yoda” ” 66”  
-> \[7,\] ” 7” “Mon Mothma” “150”  
-> \[8,\] ” 8” “Wicket Systri Warrick” ” 88”  
-> \[9,\] ” 9” “Nien Nunb” “160”  
-> \[10,\] “10” “Watto” “137”
+    # A tibble: 10 × 3
+       row_number name                  height
+            <int> <chr>                  <int>
+     1          1 C-3PO                    167
+     2          2 R2-D2                     96
+     3          3 Leia Organa              150
+     4          4 Beru Whitesun Lars       165
+     5          5 R5-D4                     97
+     6          6 Yoda                      66
+     7          7 Mon Mothma               150
+     8          8 Wicket Systri Warrick     88
+     9          9 Nien Nunb                160
+    10         10 Watto                    137
 
 #### Подсчитать ИМТ (индекс массы тела) для всех персонажей. ИМТ подсчитать по формулe$I=\frac{m}{h^2}$, где 𝑚 – масса (weight), а ℎ – рост (height).
 
@@ -187,21 +187,22 @@ starwars %>%
 starwars %>%
   mutate(height_m = height / 100,bmi = mass / (height_m)^2) %>%
   select(name, mass, height, bmi) %>%
-  as.matrix() %>%
   head(10)
 ```
 
-> name mass height bmi   
-> \[1,\] “Luke Skywalker” ” 77.0” “172” ” 26.02758”  
-> \[2,\] “C-3PO” ” 75.0” “167” ” 26.89232”  
-> \[3,\] “R2-D2” ” 32.0” ” 96” ” 34.72222”  
-> \[4,\] “Darth Vader” ” 136.0” “202” ” 33.33007”  
-> \[5,\] “Leia Organa” ” 49.0” “150” ” 21.77778”  
-> \[6,\] “Owen Lars” ” 120.0” “178” ” 37.87401”  
-> \[7,\] “Beru Whitesun Lars” ” 75.0” “165” ” 27.54821”  
-> \[8,\] “R5-D4” ” 32.0” ” 97” ” 34.00999”  
-> \[9,\] “Biggs Darklighter” ” 84.0” “183” ” 25.08286”  
-> \[10,\] “Obi-Wan Kenobi” ” 77.0” “182” ” 23.24598”  
+    # A tibble: 10 × 4
+       name                mass height   bmi
+       <chr>              <dbl>  <int> <dbl>
+     1 Luke Skywalker        77    172  26.0
+     2 C-3PO                 75    167  26.9
+     3 R2-D2                 32     96  34.7
+     4 Darth Vader          136    202  33.3
+     5 Leia Organa           49    150  21.8
+     6 Owen Lars            120    178  37.9
+     7 Beru Whitesun Lars    75    165  27.5
+     8 R5-D4                 32     97  34.0
+     9 Biggs Darklighter     84    183  25.1
+    10 Obi-Wan Kenobi        77    182  23.2
 
 #### Найти 10 самых “вытянутых” персонажей. “Вытянутость” оценить по отношению массы (mass) к росту (height) персонажей.
 
@@ -213,21 +214,22 @@ starwars %>%
  head(10) %>%
  select(name, mass, height, stretch_ratio) %>%
  mutate(row_number = row_number()) %>%
- select(row_number, name, mass, height, stretch_ratio) %>%
- as.matrix()
+ select(row_number, name, mass, height, stretch_ratio)
 ```
 
-> row_number name mass height stretch_ratio  
-> \[1,\] ” 1” “Jabba Desilijic Tiure” “1358” “175” “7.7600000”   
-> \[2,\] ” 2” “Grievous” ” 159” “216” “0.7361111”   
-> \[3,\] ” 3” “IG-88” ” 140” “200” “0.7000000”  
-> \[4,\] ” 4” “Owen Lars” ” 120” “178” “0.6741573”   
-> \[5,\] ” 5” “Darth Vader” ” 136” “202” “0.6732673”   
-> \[6,\] ” 6” “Jek Tono Porkins” ” 110” “180” “0.6111111”   
-> \[7,\] ” 7” “Bossk” ” 113” “190” “0.5947368”   
-> \[8,\] ” 8” “Tarfful” ” 136” “234” “0.5811966”   
-> \[9,\] ” 9” “Dexter Jettster” ” 102” “198” “0.5151515”   
-> \[10,\] “10” “Chewbacca” ” 112” “228” “0.4912281” 
+    # A tibble: 10 × 5
+       row_number name                   mass height stretch_ratio
+            <int> <chr>                 <dbl>  <int>         <dbl>
+     1          1 Jabba Desilijic Tiure  1358    175         7.76 
+     2          2 Grievous                159    216         0.736
+     3          3 IG-88                   140    200         0.7  
+     4          4 Owen Lars               120    178         0.674
+     5          5 Darth Vader             136    202         0.673
+     6          6 Jek Tono Porkins        110    180         0.611
+     7          7 Bossk                   113    190         0.595
+     8          8 Tarfful                 136    234         0.581
+     9          9 Dexter Jettster         102    198         0.515
+    10         10 Chewbacca               112    228         0.491
 
 #### Найти средний возраст персонажей каждой расы вселенной Звездных войн.
 
@@ -236,28 +238,29 @@ starwars %>%
  mutate(current_year = 100,age = current_year + birth_year) %>%
  filter(!is.na(age) & !is.na(species)) %>%
  group_by(species) %>%
- summarise(average_age = mean(age),count = n()) %>%  + arrange(desc(average_age)) %>%
+ summarise(average_age = mean(age),count = n()) %>%arrange(desc(average_age)) %>%
  mutate(row_number = row_number()) %>%
- select(row_number, species, average_age, count) %>%
- as.matrix()
+ select(row_number, species, average_age, count)
 ```
 
-> row_number species average_age count  
-> \[1,\] ” 1” “Yoda’s species” “996.0000” ” 1”  
-> \[2,\] ” 2” “Hutt” “700.0000” ” 1”   
-> \[3,\] ” 3” “Wookiee” “300.0000” ” 1”   
-> \[4,\] ” 4” “Cerean” “192.0000” ” 1”   
-> \[5,\] ” 5” “Zabrak” “154.0000” ” 1”   
-> \[6,\] ” 6” “Human” “153.7423” “26”   
-> \[7,\] ” 7” “Droid” “153.3333” ” 3”   
-> \[8,\] ” 8” “Trandoshan” “153.0000” ” 1”   
-> \[9,\] ” 9” “Gungan” “152.0000” ” 1”   
-> \[10,\] “10” “Mirialan” “149.0000” ” 2”  
-> \[11,\] “11” “Twi’lek” “148.0000” ” 1”   
-> \[12,\] “12” “Rodian” “144.0000” ” 1”   
-> \[13,\] “13” “Mon Calamari” “141.0000” ” 1”   
-> \[14,\] “14” “Kel Dor” “122.0000” ” 1”   
-> \[15,\] “15” “Ewok” “108.0000” ” 1” 
+    # A tibble: 15 × 4
+       row_number species        average_age count
+            <int> <chr>                <dbl> <int>
+     1          1 Yoda's species        996      1
+     2          2 Hutt                  700      1
+     3          3 Wookiee               300      1
+     4          4 Cerean                192      1
+     5          5 Zabrak                154      1
+     6          6 Human                 154.    26
+     7          7 Droid                 153.     3
+     8          8 Trandoshan            153      1
+     9          9 Gungan                152      1
+    10         10 Mirialan              149      2
+    11         11 Twi'lek               148      1
+    12         12 Rodian                144      1
+    13         13 Mon Calamari          141      1
+    14         14 Kel Dor               122      1
+    15         15 Ewok                  108      1
 
 #### Найти самый распространенный цвет глаз персонажей вселенной Звездных войн.
 
@@ -269,7 +272,7 @@ starwars %>%
  pull(eye_color)
 ```
 
-> \[1\] “brown”
+    [1] "brown"
 
 #### Подсчитать среднюю длину имени в каждой расе вселенной Звездных войн.
 
@@ -281,53 +284,23 @@ starwars %>%
   summarise(avg_name_length = mean(name_length, na.rm = TRUE),count = n()) %>%
   arrange(desc(avg_name_length)) %>%
   mutate(row_number = row_number()) %>%
-  select(row_number, species, avg_name_length, count) %>%
-  as.matrix()
+  select(row_number, species, avg_name_length, count)
 ```
 
-> row_number species avg_name_length count  
-> \[1,\] ” 1” “Ewok” “21.000000” ” 1”   
-> \[2,\] ” 2” “Hutt” “21.000000” ” 1”   
-> \[3,\] ” 3” “Geonosian” “17.000000” ” 1”   
-> \[4,\] ” 4” “Besalisk” “15.000000” ” 1”   
-> \[5,\] ” 5” “Mirialan” “14.000000” ” 2”  
-> \[6,\] ” 6” “Toong” “14.000000” ” 1”   
-> \[7,\] ” 7” “Aleena” “12.000000” ” 1”   
-> \[8,\] ” 8” “Cerean” “12.000000” ” 1”   
-> \[9,\] ” 9” “Gungan” “11.666667” ” 3”   
-> \[10,\] “10” “Human” “11.342857” “35”   
-> \[11,\] “11” “Iktotchi” “11.000000” ” 1”   
-> \[12,\] “12” “Neimodian” “11.000000” ” 1”   
-> \[13,\] “13” “Quermian” “11.000000” ” 1”   
-> \[14,\] “14” “Twi’lek” “11.000000” ” 2”   
-> \[15,\] “15” “Chagrian” “10.000000” ” 1”   
-> \[11,\] “11” “Iktotchi” “11.000000” ” 1”   
-> \[12,\] “12” “Neimodian” “11.000000” ” 1”   
-> \[13,\] “13” “Quermian” “11.000000” ” 1”   
-> \[14,\] “14” “Twi’lek” “11.000000” ” 2”   
-> \[15,\] “15” “Chagrian” “10.000000” ” 1”   
-> \[16,\] “16” “Clawdite” “10.000000” ” 1”   
-> \[17,\] “17” “Pau’an” “10.000000” ” 1”   
-> \[18,\] “18” “Skakoan” “10.000000” ” 1”   
-> \[19,\] “19” “Tholothian” “10.000000” ” 1”   
-> \[20,\] “20” “Zabrak” ” 9.500000” ” 2”   
-> \[21,\] “21” “Nautolan” ” 9.000000” ” 1”   
-> \[22,\] “22” “Sullustan” ” 9.000000” ” 1”   
-> \[23,\] “23” “Kaleesh” ” 8.000000” ” 1”   
-> \[24,\] “24” “Kel Dor” ” 8.000000” ” 1”   
-> \[25,\] “25” “Muun” ” 8.000000” ” 1”   
-> \[26,\] “26” “Togruta” ” 8.000000” ” 1”   
-> \[27,\] “27” “Vulptereen” ” 8.000000” ” 1”   
-> \[28,\] “28” “Wookiee” ” 8.000000” ” 2”   
-> \[29,\] “29” “Dug” ” 7.000000” ” 1”   
-> \[30,\] “30” “Kaminoan” ” 7.000000” ” 2”   
-> \[31,\] “31” “Xexto” ” 7.000000” ” 1”   
-> \[32,\] “32” “Mon Calamari” ” 6.000000” ” 1”   
-> \[33,\] “33” “Rodian” ” 6.000000” ” 1”   
-> \[34,\] “34” “Toydarian” ” 5.000000” ” 1”   
-> \[35,\] “35” “Trandoshan” ” 5.000000” ” 1”   
-> \[36,\] “36” “Droid” ” 4.833333” ” 6”   
-> \[37,\] “37” “Yoda’s species” ” 4.000000” ” 1”   
+    # A tibble: 37 × 4
+       row_number species   avg_name_length count
+            <int> <chr>               <dbl> <int>
+     1          1 Ewok                 21       1
+     2          2 Hutt                 21       1
+     3          3 Geonosian            17       1
+     4          4 Besalisk             15       1
+     5          5 Mirialan             14       2
+     6          6 Toong                14       1
+     7          7 Aleena               12       1
+     8          8 Cerean               12       1
+     9          9 Gungan               11.7     3
+    10         10 Human                11.3    35
+    # ℹ 27 more rows
 
 ## Оценка результатов
 
