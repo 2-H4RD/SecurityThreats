@@ -63,27 +63,27 @@ install.packages("dplyr")
 > WARNING: Rtools is required to build R packages but is not currently
 > installed. Please download and install the appropriate version of
 > Rtools before proceeding:
-
-https://cran.rstudio.com/bin/windows/Rtools/ Устанавливаю пакет в
-‘D:/Rlib’ (потому что ‘lib’ не определено) пробую URL
-‘https://mirror.truenetwork.ru/CRAN/bin/windows/contrib/4.5/dplyr_1.1.4.zip’
-Content type ‘application/zip’ length 1593077 bytes (1.5 MB) downloaded
-1.5 MB
-
-пакет ‘dplyr’ успешно распакован, MD5-суммы проверены
-
-Скачанные бинарные пакеты находятся в D:\_packages \>  
-library(dplyr)
-
-Присоединяю пакет: ‘dplyr’
-
-Следующие объекты скрыты от ‘package:stats’:
-
-filter, lag
-
-Следующие объекты скрыты от ‘package:base’:
-
-intersect, setdiff, setequal, union
+>
+> https://cran.rstudio.com/bin/windows/Rtools/ Устанавливаю пакет в
+> ‘D:/Rlib’ (потому что ‘lib’ не определено) пробую URL
+> ‘https://mirror.truenetwork.ru/CRAN/bin/windows/contrib/4.5/dplyr_1.1.4.zip’
+> Content type ‘application/zip’ length 1593077 bytes (1.5 MB)
+> downloaded 1.5 MB
+>
+> пакет ‘dplyr’ успешно распакован, MD5-суммы проверены
+>
+> Скачанные бинарные пакеты находятся в D:\_packages \>  
+> library(dplyr)
+>
+> Присоединяю пакет: ‘dplyr’
+>
+> Следующие объекты скрыты от ‘package:stats’:
+>
+> filter, lag
+>
+> Следующие объекты скрыты от ‘package:base’:
+>
+> intersect, setdiff, setequal, union
 
 ``` r
 data(starwars)
