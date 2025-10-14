@@ -103,8 +103,6 @@ starwars %>%
 starwars %>%
   filter(height < 170) %>%
   select(name, height) %>%
-  mutate(row_number = row_number())%>%
-  select(row_number, name, height) %>%
   head(10)
 ```
 
@@ -125,9 +123,7 @@ starwars %>%
  filter(!is.na(stretch_ratio)) %>%
  arrange(desc(stretch_ratio)) %>%
  head(10) %>%
- select(name, mass, height, stretch_ratio) %>%
- mutate(row_number = row_number()) %>%
- select(row_number, name, mass, height, stretch_ratio)
+ select(name, mass, height, stretch_ratio)
 ```
 
 
@@ -138,9 +134,7 @@ starwars %>%
  mutate(current_year = 100,age = current_year + birth_year) %>%
  filter(!is.na(age) & !is.na(species)) %>%
  group_by(species) %>%
- summarise(average_age = mean(age),count = n()) %>%arrange(desc(average_age)) %>%
- mutate(row_number = row_number()) %>%
- select(row_number, species, average_age, count)
+ summarise(average_age = mean(age),count = n()) %>%arrange(desc(average_age))
 ```
 
 #### Найти самый распространенный цвет глаз персонажей вселенной Звездных войн.
@@ -162,9 +156,7 @@ starwars %>%
   filter(!is.na(species)) %>%
   group_by(species) %>%
   summarise(avg_name_length = mean(name_length, na.rm = TRUE),count = n()) %>%
-  arrange(desc(avg_name_length)) %>%
-  mutate(row_number = row_number()) %>%
-  select(row_number, species, avg_name_length, count)
+  arrange(desc(avg_name_length))
 ```
 
 
