@@ -51,8 +51,8 @@ format:
 
 ### Установка пакета dplyr, загрузка датасета.
 
-``` {r}
-options(repos = c(CRAN = "https://cloud.r-project.org"))
+```{r}
+options(repos = c(CRAN = "https://mirror.truenetwork.ru/CRAN/"))
 install.packages("dplyr")
 library(dplyr)
 data(starwars)
@@ -62,62 +62,55 @@ data(starwars)
 
 #### Сколько строк в датафрейме?
 
-``` {r}
+```{r}
 nrow(starwars)
 ```
 
 #### Сколько столбцов в датафрейме?
 
-``` {r}
+```{r}
 ncol(starwars)
 ```
 
-
 #### Как просмотреть примерный вид датафрейма?
 
-``` {r}
+```{r}
 glimpse(starwars)
 ```
 
-
 #### Сколько уникальных рас персонажей (species) представлено в данных?
 
-``` {r}
+```{r}
 starwars %>% distinct(species) %>% nrow()
 ```
 
-
-
 #### Найти самого высокого персонажа.
 
-``` {r}
+```{r}
 starwars %>%
   filter(height == max(height,na.rm = TRUE)) %>%
   pull(name)
 ```
 
-
 #### Найти всех персонажей ниже 170
 
-``` {r}
+```{r}
 starwars %>%
   filter(height < 170) %>%
-  select(name, height) %>%
-  head(10)
+  select(name, height)
 ```
 
 #### Подсчитать ИМТ (индекс массы тела) для всех персонажей. ИМТ подсчитать по формулe$I=\frac{m}{h^2}$, где 𝑚 – масса (weight), а ℎ – рост (height).
 
-``` {r}
+```{r}
 starwars %>%
   mutate(height_m = height / 100,bmi = mass / (height_m)^2) %>%
-  select(name, mass, height, bmi) %>%
-  head(10)
+  select(name, mass, height, bmi)
 ```
 
 #### Найти 10 самых “вытянутых” персонажей. “Вытянутость” оценить по отношению массы (mass) к росту (height) персонажей.
 
-``` {r}
+```{r}
 starwars %>% 
  mutate(stretch_ratio = mass / height) %>%
  filter(!is.na(stretch_ratio)) %>%
@@ -126,20 +119,20 @@ starwars %>%
  select(name, mass, height, stretch_ratio)
 ```
 
-
 #### Найти средний возраст персонажей каждой расы вселенной Звездных войн.
 
-``` {r}
+```{r}
 starwars %>%
  mutate(current_year = 100,age = current_year + birth_year) %>%
  filter(!is.na(age) & !is.na(species)) %>%
  group_by(species) %>%
- summarise(average_age = mean(age),count = n()) %>%arrange(desc(average_age))
+ summarise(average_age = mean(age),count = n()) %>%
+ arrange(desc(average_age))
 ```
 
 #### Найти самый распространенный цвет глаз персонажей вселенной Звездных войн.
 
-``` {r}
+```{r}
 starwars %>%
  count(eye_color, sort = TRUE) %>%
  filter(!is.na(eye_color)) %>%
@@ -147,10 +140,9 @@ starwars %>%
  pull(eye_color)
 ```
 
-
 #### Подсчитать среднюю длину имени в каждой расе вселенной Звездных войн.
 
-``` {r}
+```{r}
 starwars %>%
   mutate(name_length = nchar(name)) %>%
   filter(!is.na(species)) %>%
@@ -158,7 +150,6 @@ starwars %>%
   summarise(avg_name_length = mean(name_length, na.rm = TRUE),count = n()) %>%
   arrange(desc(avg_name_length))
 ```
-
 
 ## Оценка результатов
 

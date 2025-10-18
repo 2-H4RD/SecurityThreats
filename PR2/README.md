@@ -57,7 +57,7 @@ vszub24@yandex.ru
 ### Установка пакета dplyr, загрузка датасета.
 
 ``` r
-options(repos = c(CRAN = "https://cloud.r-project.org"))
+options(repos = c(CRAN = "https://mirror.truenetwork.ru/CRAN/"))
 install.packages("dplyr")
 ```
 
@@ -76,7 +76,7 @@ install.packages("dplyr")
 
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpY5MYK1\downloaded_packages
+        D:\Rtemp\RtmpGutOgG\downloaded_packages
 
 ``` r
 library(dplyr)
@@ -161,11 +161,10 @@ starwars %>%
 ``` r
 starwars %>%
   filter(height < 170) %>%
-  select(name, height) %>%
-  head(10)
+  select(name, height)
 ```
 
-    # A tibble: 10 × 2
+    # A tibble: 22 × 2
        name                  height
        <chr>                  <int>
      1 C-3PO                    167
@@ -178,17 +177,17 @@ starwars %>%
      8 Wicket Systri Warrick     88
      9 Nien Nunb                160
     10 Watto                    137
+    # ℹ 12 more rows
 
 #### Подсчитать ИМТ (индекс массы тела) для всех персонажей. ИМТ подсчитать по формулe$I=\frac{m}{h^2}$, где 𝑚 – масса (weight), а ℎ – рост (height).
 
 ``` r
 starwars %>%
   mutate(height_m = height / 100,bmi = mass / (height_m)^2) %>%
-  select(name, mass, height, bmi) %>%
-  head(10)
+  select(name, mass, height, bmi)
 ```
 
-    # A tibble: 10 × 4
+    # A tibble: 87 × 4
        name                mass height   bmi
        <chr>              <dbl>  <int> <dbl>
      1 Luke Skywalker        77    172  26.0
@@ -201,6 +200,7 @@ starwars %>%
      8 R5-D4                 32     97  34.0
      9 Biggs Darklighter     84    183  25.1
     10 Obi-Wan Kenobi        77    182  23.2
+    # ℹ 77 more rows
 
 #### Найти 10 самых “вытянутых” персонажей. “Вытянутость” оценить по отношению массы (mass) к росту (height) персонажей.
 
@@ -234,7 +234,8 @@ starwars %>%
  mutate(current_year = 100,age = current_year + birth_year) %>%
  filter(!is.na(age) & !is.na(species)) %>%
  group_by(species) %>%
- summarise(average_age = mean(age),count = n()) %>%arrange(desc(average_age))
+ summarise(average_age = mean(age),count = n()) %>%
+ arrange(desc(average_age))
 ```
 
     # A tibble: 15 × 3
