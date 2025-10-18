@@ -57,7 +57,7 @@ vszub24@yandex.ru
 ### Установка пакета nycflights13
 
 ``` r
-options(repos = c(CRAN = "https://cloud.r-project.org"))
+options(repos = c(CRAN = "https://mirror.truenetwork.ru/CRAN/"))
 install.packages("nycflights13")
 ```
 
@@ -67,7 +67,7 @@ install.packages("nycflights13")
     пакет 'nycflights13' успешно распакован, MD5-суммы проверены
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpO4B6On\downloaded_packages
+        D:\Rtemp\RtmpSQhRTS\downloaded_packages
 
 ``` r
 install.packages("dplyr")
@@ -78,17 +78,8 @@ install.packages("dplyr")
 
     пакет 'dplyr' успешно распакован, MD5-суммы проверены
 
-    Warning: не могу удалить прежнюю установку пакета 'dplyr'
-
-    Warning in file.copy(savedcopy, lib, recursive = TRUE): проблема с копированием
-    D:\Rlib\00LOCK\dplyr\libs\x64\dplyr.dll в D:\Rlib\dplyr\libs\x64\dplyr.dll:
-    Permission denied
-
-    Warning: восстановлен 'dplyr'
-
-
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpO4B6On\downloaded_packages
+        D:\Rtemp\RtmpSQhRTS\downloaded_packages
 
 ``` r
 library(nycflights13)

@@ -54,7 +54,7 @@ format:
 ### Установка пакета nycflights13
 
 ```{r}
-options(repos = c(CRAN = "https://cloud.r-project.org"))
+options(repos = c(CRAN = "https://mirror.truenetwork.ru/CRAN/"))
 install.packages("nycflights13")
 install.packages("dplyr")
 library(nycflights13)
