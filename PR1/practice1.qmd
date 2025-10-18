@@ -31,7 +31,7 @@ format:
 
 ### Установка R и RStudio
 
-``` r
+``` {r}
 sessionInfo()
 ```
 
