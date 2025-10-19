@@ -60,8 +60,6 @@ unzip(
   exdir = temp_dir
 )
 log_files <- list.files(temp_dir, pattern = "\\.log$", full.names = TRUE)
-print(log_files)
-log_content <- read_lines(log_files[1])
 ```
 
 ```{r}

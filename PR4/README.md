@@ -65,7 +65,7 @@ install.packages("readr")
 
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpeAVwjV\downloaded_packages
+        D:\Rtemp\Rtmp0sdNAK\downloaded_packages
 
 ``` r
 install.packages("dplyr")
@@ -86,7 +86,7 @@ install.packages("dplyr")
 
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpeAVwjV\downloaded_packages
+        D:\Rtemp\Rtmp0sdNAK\downloaded_packages
 
 ``` r
 install.packages("stringr")
@@ -98,7 +98,7 @@ install.packages("stringr")
     пакет 'stringr' успешно распакован, MD5-суммы проверены
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpeAVwjV\downloaded_packages
+        D:\Rtemp\Rtmp0sdNAK\downloaded_packages
 
 ``` r
 install.packages("httr")
@@ -110,7 +110,7 @@ install.packages("httr")
     пакет 'httr' успешно распакован, MD5-суммы проверены
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpeAVwjV\downloaded_packages
+        D:\Rtemp\Rtmp0sdNAK\downloaded_packages
 
 ``` r
 install.packages("jsonlite")
@@ -131,7 +131,7 @@ install.packages("jsonlite")
 
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpeAVwjV\downloaded_packages
+        D:\Rtemp\Rtmp0sdNAK\downloaded_packages
 
 ``` r
 library(httr)
@@ -165,13 +165,6 @@ unzip(
   exdir = temp_dir
 )
 log_files <- list.files(temp_dir, pattern = "\\.log$", full.names = TRUE)
-print(log_files)
-```
-
-    [1] "D:/Rtemp\\RtmpeAVwjV/dns.log"
-
-``` r
-log_content <- read_lines(log_files[1])
 ```
 
 ``` r
