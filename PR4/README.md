@@ -55,8 +55,17 @@ install.packages("readr")
 
     пакет 'readr' успешно распакован, MD5-суммы проверены
 
+    Warning: не могу удалить прежнюю установку пакета 'readr'
+
+    Warning in file.copy(savedcopy, lib, recursive = TRUE): проблема с копированием
+    D:\Rlib\00LOCK\readr\libs\x64\readr.dll в D:\Rlib\readr\libs\x64\readr.dll:
+    Permission denied
+
+    Warning: восстановлен 'readr'
+
+
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpaIBnz3\downloaded_packages
+        D:\Rtemp\RtmpeAVwjV\downloaded_packages
 
 ``` r
 install.packages("dplyr")
@@ -67,8 +76,17 @@ install.packages("dplyr")
 
     пакет 'dplyr' успешно распакован, MD5-суммы проверены
 
+    Warning: не могу удалить прежнюю установку пакета 'dplyr'
+
+    Warning in file.copy(savedcopy, lib, recursive = TRUE): проблема с копированием
+    D:\Rlib\00LOCK\dplyr\libs\x64\dplyr.dll в D:\Rlib\dplyr\libs\x64\dplyr.dll:
+    Permission denied
+
+    Warning: восстановлен 'dplyr'
+
+
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpaIBnz3\downloaded_packages
+        D:\Rtemp\RtmpeAVwjV\downloaded_packages
 
 ``` r
 install.packages("stringr")
@@ -80,7 +98,7 @@ install.packages("stringr")
     пакет 'stringr' успешно распакован, MD5-суммы проверены
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpaIBnz3\downloaded_packages
+        D:\Rtemp\RtmpeAVwjV\downloaded_packages
 
 ``` r
 install.packages("httr")
@@ -92,7 +110,7 @@ install.packages("httr")
     пакет 'httr' успешно распакован, MD5-суммы проверены
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpaIBnz3\downloaded_packages
+        D:\Rtemp\RtmpeAVwjV\downloaded_packages
 
 ``` r
 install.packages("jsonlite")
@@ -113,7 +131,7 @@ install.packages("jsonlite")
 
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpaIBnz3\downloaded_packages
+        D:\Rtemp\RtmpeAVwjV\downloaded_packages
 
 ``` r
 library(httr)
@@ -150,23 +168,11 @@ log_files <- list.files(temp_dir, pattern = "\\.log$", full.names = TRUE)
 print(log_files)
 ```
 
-    [1] "D:/Rtemp\\RtmpaIBnz3/dns.log"
+    [1] "D:/Rtemp\\RtmpeAVwjV/dns.log"
 
 ``` r
 log_content <- read_lines(log_files[1])
 ```
-
-``` r
-for (i in 1:min(5, length(log_content))) {
-  cat(paste("Строка", i, ":", log_content[i], "\n"))
-}
-```
-
-    Строка 1 : 1331901005.510000    CWGtK431H9XuaTN4fi  192.168.202.100 45658   192.168.27.203  137 udp 33008   *\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00   1   C_INTERNET  33  SRV 0   NOERROR F   F   F   F   1   -   -   F 
-    Строка 2 : 1331901015.070000    C36a282Jljz7BsbGH   192.168.202.76  137 192.168.202.255 137 udp 57402   HPE8AA67    1   C_INTERNET  32  NB  -   -   F   F   T   F   1   -   -   F 
-    Строка 3 : 1331901015.820000    C36a282Jljz7BsbGH   192.168.202.76  137 192.168.202.255 137 udp 57402   HPE8AA67    1   C_INTERNET  32  NB  -   -   F   F   T   F   1   -   -   F 
-    Строка 4 : 1331901016.570000    C36a282Jljz7BsbGH   192.168.202.76  137 192.168.202.255 137 udp 57402   HPE8AA67    1   C_INTERNET  32  NB  -   -   F   F   T   F   1   -   -   F 
-    Строка 5 : 1331901005.860000    C36a282Jljz7BsbGH   192.168.202.76  137 192.168.202.255 137 udp 57398   WPAD    1   C_INTERNET  32  NB  -   -   F   F   T   F   1   -   -   F 
 
 ``` r
 # Вектор с названиями столбцов на основе документации Zeek
@@ -176,30 +182,16 @@ column_names <- c(
   "qclass_name", "qtype", "qtype_name", "rcode", "rcode_name", 
   "AA", "TC", "RD", "RA", "Z", "answers", "TTLS", "rejected"
 )
-dns_data <- read_delim(
+dns_data <- invisible(read_delim(
   log_files[1],
   delim = "\t",
   col_names = column_names,
   comment = "#",
   na = c("", "NA", "-"),
-  trim_ws = TRUE
-) %>% 
-  as_tibble()
-```
-
-    Rows: 427935 Columns: 23
-    ── Column specification ────────────────────────────────────────────────────────
-    Delimiter: "\t"
-    chr (10): uid, source_ip, destination_ip, protocol, query, qclass_name, qtyp...
-    dbl  (8): timestamp, source_port, destination_port, transaction_id, qclass, ...
-    lgl  (5): AA, TC, RD, RA, rejected
-
-    ℹ Use `spec()` to retrieve the full column specification for this data.
-    ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-
-``` r
-dns_data %>% 
-  head(10)
+  trim_ws = TRUE,
+  show_col_types = FALSE
+)) %>% as_tibble()
+head(dns_data,10)
 ```
 
     # A tibble: 10 × 23
@@ -229,36 +221,10 @@ dns_data_clean <- dns_data %>%
     transaction_id = as.numeric(transaction_id),
     qclass = as.numeric(qclass),
     qtype = as.numeric(qtype),
-    rcode = as.numeric(rcode)
+    rcode = as.numeric(rcode),
   ) %>% as_tibble()
-glimpse(dns_data_clean) %>% head(10)
+head(dns_data_clean,10)
 ```
-
-    Rows: 427,935
-    Columns: 23
-    $ timestamp        <dttm> 2012-03-16 16:30:05, 2012-03-16 16:30:15, 2012-03-16…
-    $ uid              <chr> "CWGtK431H9XuaTN4fi", "C36a282Jljz7BsbGH", "C36a282Jl…
-    $ source_ip        <chr> "192.168.202.100", "192.168.202.76", "192.168.202.76"…
-    $ source_port      <dbl> 45658, 137, 137, 137, 137, 137, 137, 137, 137, 137, 1…
-    $ destination_ip   <chr> "192.168.27.203", "192.168.202.255", "192.168.202.255…
-    $ destination_port <dbl> 137, 137, 137, 137, 137, 137, 137, 137, 137, 137, 137…
-    $ protocol         <chr> "udp", "udp", "udp", "udp", "udp", "udp", "udp", "udp…
-    $ transaction_id   <dbl> 33008, 57402, 57402, 57402, 57398, 57398, 57398, 6218…
-    $ query            <chr> "*\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\…
-    $ qclass           <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
-    $ qclass_name      <chr> "C_INTERNET", "C_INTERNET", "C_INTERNET", "C_INTERNET…
-    $ qtype            <dbl> 33, 32, 32, 32, 32, 32, 32, 32, 32, 32, 33, 33, 33, 1…
-    $ qtype_name       <chr> "SRV", "NB", "NB", "NB", "NB", "NB", "NB", "NB", "NB"…
-    $ rcode            <dbl> 0, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
-    $ rcode_name       <chr> "NOERROR", NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
-    $ AA               <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALS…
-    $ TC               <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALS…
-    $ RD               <lgl> FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE…
-    $ RA               <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALS…
-    $ Z                <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1,…
-    $ answers          <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
-    $ TTLS             <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
-    $ rejected         <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALS…
 
     # A tibble: 10 × 23
        timestamp           uid                source_ip   source_port destination_ip
@@ -322,10 +288,9 @@ dns_data_clean%>%
     10 192.168.202.106 10784
 
 ``` r
-#Найдите топ-10 доменов, к которым обращаются пользователи сети и соответственное количество обращений
+# Задача 7:Найдите топ-10 доменов, к которым обращаются пользователи сети и соответственное количество обращений
 top_10_domains <- dns_data_clean%>%count(query, sort = TRUE) %>%
-  as_tibble() %>%
-  head(10)
+  as_tibble() %>% head(10)
 top_10_domains
 ```
 
