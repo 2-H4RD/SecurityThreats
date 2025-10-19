@@ -21,17 +21,18 @@ format:
 
 ## План
 
-1.  Импортирт данных DNS
-2.  Добавить пропущенные данные о структуре данных (назначении столбцов)
-3.  Преобразовать данные в столбцах в нужный формат
-4.  Просмотреть общую структуру данных с помощью функции glimpse()
-5.  Сколько участников информационного обмена в сети Доброй Организации?
-6.  Какое соотношение участников обмена внутри сети и участников обращений к внешним ресурсам?
-7.  Найдите топ-10 участников сети, проявляющих наибольшую сетевую активность.
-8.  Найдите топ-10 доменов, к которым обращаются пользователи сети и соответственное количество обращений
-9.  Опеределите базовые статистические характеристики (функция summary() ) интервала времени между последовательными обращениями к топ-10 доменам.
-10. Часто вредоносное программное обеспечение использует DNS канал в качестве канала управления, периодически отправляя запросы на подконтрольный злоумышленникам DNS сервер. По периодическим запросам на один и тот же домен можно выявить скрытый DNS канал. Есть ли такие IP адреса в исследуемом датасете?
-11. Определить местоположение (страну, город) и организацию-провайдера для топ-10 доменов. Для этого можно использовать сторонние сервисы, например http://ip-api.com (API-эндпоинт – http://ip-api.com/json).
+1. Импортируйте данные DNS – https://storage.yandexcloud.net/dataset.ctfsec/dns.zip
+Данные были собраны с помощью сетевого анализатора zeek
+2. Добавьте пропущенные данные о структуре данных (назначении столбцов)
+3. Преобразуйте данные в столбцах в нужный формат,просмотрите общую структуру данных с помощью функции glimpse()
+4. Сколько участников информационного обмена всети Доброй Организации?
+5. Какое соотношение участников обмена внутрисети и участников обращений к внешним ресурсам?
+6. Найдите топ-10 участников сети, проявляющих наибольшую сетевую активность.
+7. Найдите топ-10 доменов, к которым обращаются пользователи сети и соответственное количество обращений
+8. Опеределите базовые статистические характеристики (функция summary() ) интервала времени между последовательными обращениями к топ-10 доменам.
+9. Часто вредоносное программное обеспечение использует DNS канал в качестве канала управления, периодически отправляя запросы на подконтрольный злоумышленникам DNS сервер. По периодическим запросам на один и тот же домен можно выявить скрытый DNS канал. Есть ли такие IP адреса в исследуемом датасете?
+10. Определите местоположение (страну, город) и организацию-провайдера для топ-10 доменов. Для этого можно использовать сторонние сервисы,например http://ip-api.com (API-эндпоинт –
+http://ip-api.com/json).
 
 ## Шаги:
 
@@ -47,6 +48,7 @@ library(jsonlite)
 library(readr)
 library(dplyr)
 library(stringr)
+library(knitr)
 temp_dir <- tempdir()
 download.file(
   url = "https://storage.yandexcloud.net/dataset.ctfsec/dns.zip",
@@ -63,14 +65,9 @@ log_content <- read_lines(log_files[1])
 ```
 
 ```{r}
-cat("Первые 5 строк лог-файла:\n")
 for (i in 1:min(5, length(log_content))) {
   cat(paste("Строка", i, ":", log_content[i], "\n"))
 }
-```
-
-```{r}
-cat("\nВсего строк в файле:", length(log_content), "\n")
 ```
 
 ```{r}
@@ -81,7 +78,6 @@ column_names <- c(
   "qclass_name", "qtype", "qtype_name", "rcode", "rcode_name", 
   "AA", "TC", "RD", "RA", "Z", "answers", "TTLS", "rejected"
 )
-
 dns_data <- read_delim(
   log_files[1],
   delim = "\t",
@@ -89,12 +85,13 @@ dns_data <- read_delim(
   comment = "#",
   na = c("", "NA", "-"),
   trim_ws = TRUE
-)
-glimpse(dns_data) %>% head(10)
+) %>% 
+  as_tibble()
+dns_data %>% 
+  head(10)
 ```
 
 ```{r}
-
 dns_data_clean <- dns_data %>%
   mutate(
     timestamp = as.POSIXct(timestamp, origin = "1970-01-01"),
@@ -104,13 +101,13 @@ dns_data_clean <- dns_data %>%
     qclass = as.numeric(qclass),
     qtype = as.numeric(qtype),
     rcode = as.numeric(rcode)
-  )
+  ) %>% as_tibble()
 glimpse(dns_data_clean) %>% head(10)
 
 ```
 
 ```{r}
-#Сколько участников информационного обмена в сети Доброй Организации?
+# Задача 4: Сколько участников информационного обмена в сети Доброй Организации?
 unique_source_ips <- unique(dns_data_clean$source_ip)
 unique_destination_ips <- unique(dns_data_clean$destination_ip)
 all_ips<-unique(c(unique_source_ips, unique_destination_ips))
@@ -126,15 +123,19 @@ length(internal_ips) / length(external_ips)
 ```
 
 ```{r}
+# Задача 6: Найдите топ-10 участников сети, проявляющих наибольшую сетевую активность
 dns_data_clean%>%
   group_by(source_ip)%>%
   count(sort = TRUE) %>%
+  as_tibble() %>%
   head(10)
 ```
 
 ```{r}
 #Найдите топ-10 доменов, к которым обращаются пользователи сети и соответственное количество обращений
-top_10_domains <- dns_data_clean%>%count(query, sort = TRUE) %>%head(10)
+top_10_domains <- dns_data_clean%>%count(query, sort = TRUE) %>%
+  as_tibble() %>%
+  head(10)
 top_10_domains
 ```
 
@@ -209,7 +210,8 @@ for(domain in top_domains) {
     }
   }
 }
-suspicious_ips <- periodic_analysis[periodic_analysis$is_periodic == TRUE, ]
+suspicious_ips <- periodic_analysis[periodic_analysis$is_periodic == TRUE, ] %>%
+  as_tibble()
 suspicious_ips
 ```
 
@@ -262,7 +264,7 @@ for (i in 1:nrow(domain_ip_mapping)) {
         country = data$country,
         city = data$city,
         isp = data$isp
-      ))
+      ))%>% as_tibble()
     } else {
       domain_geo_info <- rbind(domain_geo_info, data.frame(
         domain = domain,
@@ -270,7 +272,7 @@ for (i in 1:nrow(domain_ip_mapping)) {
         country = "Не определено",
         city = "Не определено",
         isp = "Не определено"
-      ))
+      ))%>% as_tibble()
     }
   } else {
     domain_geo_info <- rbind(domain_geo_info, data.frame(
@@ -279,7 +281,7 @@ for (i in 1:nrow(domain_ip_mapping)) {
       country = "Ошибка API",
       city = "Ошибка API",
       isp = "Ошибка API"
-    ))
+    )) %>% as_tibble()
   }
   Sys.sleep(1)
 }

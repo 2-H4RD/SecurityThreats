@@ -17,28 +17,31 @@ vszub24@yandex.ru
 
 ## План
 
-1.  Импортирт данных DNS
-2.  Добавить пропущенные данные о структуре данных (назначении столбцов)
-3.  Преобразовать данные в столбцах в нужный формат
-4.  Просмотреть общую структуру данных с помощью функции glimpse()
-5.  Сколько участников информационного обмена в сети Доброй Организации?
-6.  Какое соотношение участников обмена внутри сети и участников
+1.  Импортируйте данные DNS –
+    https://storage.yandexcloud.net/dataset.ctfsec/dns.zip Данные были
+    собраны с помощью сетевого анализатора zeek
+2.  Добавьте пропущенные данные о структуре данных (назначении столбцов)
+3.  Преобразуйте данные в столбцах в нужный формат,просмотрите общую
+    структуру данных с помощью функции glimpse()
+4.  Сколько участников информационного обмена всети Доброй Организации?
+5.  Какое соотношение участников обмена внутрисети и участников
     обращений к внешним ресурсам?
-7.  Найдите топ-10 участников сети, проявляющих наибольшую сетевую
+6.  Найдите топ-10 участников сети, проявляющих наибольшую сетевую
     активность.
-8.  Найдите топ-10 доменов, к которым обращаются пользователи сети и
+7.  Найдите топ-10 доменов, к которым обращаются пользователи сети и
     соответственное количество обращений
-9.  Опеределите базовые статистические характеристики (функция summary()
+8.  Опеределите базовые статистические характеристики (функция summary()
     ) интервала времени между последовательными обращениями к топ-10
     доменам.
-10. Часто вредоносное программное обеспечение использует DNS канал в
+9.  Часто вредоносное программное обеспечение использует DNS канал в
     качестве канала управления, периодически отправляя запросы на
     подконтрольный злоумышленникам DNS сервер. По периодическим запросам
     на один и тот же домен можно выявить скрытый DNS канал. Есть ли
     такие IP адреса в исследуемом датасете?
-11. Определить местоположение (страну, город) и организацию-провайдера
-    для топ-10 доменов. Для этого можно использовать сторонние сервисы,
-    например http://ip-api.com (API-эндпоинт – http://ip-api.com/json).
+10. Определите местоположение (страну, город) и организацию-провайдера
+    для топ-10 доменов. Для этого можно использовать сторонние
+    сервисы,например http://ip-api.com (API-эндпоинт –
+    http://ip-api.com/json).
 
 ## Шаги:
 
@@ -52,17 +55,8 @@ install.packages("readr")
 
     пакет 'readr' успешно распакован, MD5-суммы проверены
 
-    Warning: не могу удалить прежнюю установку пакета 'readr'
-
-    Warning in file.copy(savedcopy, lib, recursive = TRUE): проблема с копированием
-    D:\Rlib\00LOCK\readr\libs\x64\readr.dll в D:\Rlib\readr\libs\x64\readr.dll:
-    Permission denied
-
-    Warning: восстановлен 'readr'
-
-
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpsPLEWw\downloaded_packages
+        D:\Rtemp\RtmpaIBnz3\downloaded_packages
 
 ``` r
 install.packages("dplyr")
@@ -73,17 +67,8 @@ install.packages("dplyr")
 
     пакет 'dplyr' успешно распакован, MD5-суммы проверены
 
-    Warning: не могу удалить прежнюю установку пакета 'dplyr'
-
-    Warning in file.copy(savedcopy, lib, recursive = TRUE): проблема с копированием
-    D:\Rlib\00LOCK\dplyr\libs\x64\dplyr.dll в D:\Rlib\dplyr\libs\x64\dplyr.dll:
-    Permission denied
-
-    Warning: восстановлен 'dplyr'
-
-
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpsPLEWw\downloaded_packages
+        D:\Rtemp\RtmpaIBnz3\downloaded_packages
 
 ``` r
 install.packages("stringr")
@@ -95,7 +80,7 @@ install.packages("stringr")
     пакет 'stringr' успешно распакован, MD5-суммы проверены
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpsPLEWw\downloaded_packages
+        D:\Rtemp\RtmpaIBnz3\downloaded_packages
 
 ``` r
 install.packages("httr")
@@ -107,7 +92,7 @@ install.packages("httr")
     пакет 'httr' успешно распакован, MD5-суммы проверены
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpsPLEWw\downloaded_packages
+        D:\Rtemp\RtmpaIBnz3\downloaded_packages
 
 ``` r
 install.packages("jsonlite")
@@ -128,7 +113,7 @@ install.packages("jsonlite")
 
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpsPLEWw\downloaded_packages
+        D:\Rtemp\RtmpaIBnz3\downloaded_packages
 
 ``` r
 library(httr)
@@ -150,6 +135,7 @@ library(dplyr)
 
 ``` r
 library(stringr)
+library(knitr)
 temp_dir <- tempdir()
 download.file(
   url = "https://storage.yandexcloud.net/dataset.ctfsec/dns.zip",
@@ -164,17 +150,11 @@ log_files <- list.files(temp_dir, pattern = "\\.log$", full.names = TRUE)
 print(log_files)
 ```
 
-    [1] "D:/Rtemp\\RtmpsPLEWw/dns.log"
+    [1] "D:/Rtemp\\RtmpaIBnz3/dns.log"
 
 ``` r
 log_content <- read_lines(log_files[1])
 ```
-
-``` r
-cat("Первые 5 строк лог-файла:\n")
-```
-
-    Первые 5 строк лог-файла:
 
 ``` r
 for (i in 1:min(5, length(log_content))) {
@@ -189,13 +169,6 @@ for (i in 1:min(5, length(log_content))) {
     Строка 5 : 1331901005.860000    C36a282Jljz7BsbGH   192.168.202.76  137 192.168.202.255 137 udp 57398   WPAD    1   C_INTERNET  32  NB  -   -   F   F   T   F   1   -   -   F 
 
 ``` r
-cat("\nВсего строк в файле:", length(log_content), "\n")
-```
-
-
-    Всего строк в файле: 427935 
-
-``` r
 # Вектор с названиями столбцов на основе документации Zeek
 column_names <- c(
   "timestamp", "uid", "source_ip", "source_port", "destination_ip", 
@@ -203,7 +176,6 @@ column_names <- c(
   "qclass_name", "qtype", "qtype_name", "rcode", "rcode_name", 
   "AA", "TC", "RD", "RA", "Z", "answers", "TTLS", "rejected"
 )
-
 dns_data <- read_delim(
   log_files[1],
   delim = "\t",
@@ -211,7 +183,8 @@ dns_data <- read_delim(
   comment = "#",
   na = c("", "NA", "-"),
   trim_ws = TRUE
-)
+) %>% 
+  as_tibble()
 ```
 
     Rows: 427935 Columns: 23
@@ -225,34 +198,9 @@ dns_data <- read_delim(
     ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 
 ``` r
-glimpse(dns_data) %>% head(10)
+dns_data %>% 
+  head(10)
 ```
-
-    Rows: 427,935
-    Columns: 23
-    $ timestamp        <dbl> 1331901006, 1331901015, 1331901016, 1331901017, 13319…
-    $ uid              <chr> "CWGtK431H9XuaTN4fi", "C36a282Jljz7BsbGH", "C36a282Jl…
-    $ source_ip        <chr> "192.168.202.100", "192.168.202.76", "192.168.202.76"…
-    $ source_port      <dbl> 45658, 137, 137, 137, 137, 137, 137, 137, 137, 137, 1…
-    $ destination_ip   <chr> "192.168.27.203", "192.168.202.255", "192.168.202.255…
-    $ destination_port <dbl> 137, 137, 137, 137, 137, 137, 137, 137, 137, 137, 137…
-    $ protocol         <chr> "udp", "udp", "udp", "udp", "udp", "udp", "udp", "udp…
-    $ transaction_id   <dbl> 33008, 57402, 57402, 57402, 57398, 57398, 57398, 6218…
-    $ query            <chr> "*\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\…
-    $ qclass           <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
-    $ qclass_name      <chr> "C_INTERNET", "C_INTERNET", "C_INTERNET", "C_INTERNET…
-    $ qtype            <dbl> 33, 32, 32, 32, 32, 32, 32, 32, 32, 32, 33, 33, 33, 1…
-    $ qtype_name       <chr> "SRV", "NB", "NB", "NB", "NB", "NB", "NB", "NB", "NB"…
-    $ rcode            <dbl> 0, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
-    $ rcode_name       <chr> "NOERROR", NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
-    $ AA               <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALS…
-    $ TC               <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALS…
-    $ RD               <lgl> FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE…
-    $ RA               <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALS…
-    $ Z                <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1,…
-    $ answers          <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
-    $ TTLS             <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
-    $ rejected         <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALS…
 
     # A tibble: 10 × 23
          timestamp uid         source_ip source_port destination_ip destination_port
@@ -282,7 +230,7 @@ dns_data_clean <- dns_data %>%
     qclass = as.numeric(qclass),
     qtype = as.numeric(qtype),
     rcode = as.numeric(rcode)
-  )
+  ) %>% as_tibble()
 glimpse(dns_data_clean) %>% head(10)
 ```
 
@@ -332,7 +280,7 @@ glimpse(dns_data_clean) %>% head(10)
     #   rejected <lgl>
 
 ``` r
-#Сколько участников информационного обмена в сети Доброй Организации?
+# Задача 4: Сколько участников информационного обмена в сети Доброй Организации?
 unique_source_ips <- unique(dns_data_clean$source_ip)
 unique_destination_ips <- unique(dns_data_clean$destination_ip)
 all_ips<-unique(c(unique_source_ips, unique_destination_ips))
@@ -351,14 +299,15 @@ length(internal_ips) / length(external_ips)
     [1] 13.77174
 
 ``` r
+# Задача 6: Найдите топ-10 участников сети, проявляющих наибольшую сетевую активность
 dns_data_clean%>%
   group_by(source_ip)%>%
   count(sort = TRUE) %>%
+  as_tibble() %>%
   head(10)
 ```
 
     # A tibble: 10 × 2
-    # Groups:   source_ip [10]
        source_ip           n
        <chr>           <int>
      1 10.10.117.210   75943
@@ -374,7 +323,9 @@ dns_data_clean%>%
 
 ``` r
 #Найдите топ-10 доменов, к которым обращаются пользователи сети и соответственное количество обращений
-top_10_domains <- dns_data_clean%>%count(query, sort = TRUE) %>%head(10)
+top_10_domains <- dns_data_clean%>%count(query, sort = TRUE) %>%
+  as_tibble() %>%
+  head(10)
 top_10_domains
 ```
 
@@ -486,40 +437,23 @@ for(domain in top_domains) {
     }
   }
 }
-suspicious_ips <- periodic_analysis[periodic_analysis$is_periodic == TRUE, ]
+suspicious_ips <- periodic_analysis[periodic_analysis$is_periodic == TRUE, ] %>%
+  as_tibble()
 suspicious_ips
 ```
 
-              source_ip
-    100   192.168.25.25
-    102   192.168.24.25
-    106   192.168.21.25
-    146   192.168.25.25
-    173 192.168.202.120
-    186  192.168.202.49
-    188     192.168.0.3
-    189 192.168.202.146
-    190 192.168.202.147
-                                                                         domain
-    100                                         safebrowsing.clients.google.com
-    102                                         safebrowsing.clients.google.com
-    106                                         safebrowsing.clients.google.com
-    146 *\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00
-    173                                                                    WPAD
-    186                                                                  ISATAP
-    188                                                                  ISATAP
-    189                                                                  ISATAP
-    190                                                                  ISATAP
-        request_count avg_interval     std_dev is_periodic
-    100             8   16.1828571 0.520311327        TRUE
-    102             8   16.1528571 0.164794250        TRUE
-    106             7   14.3333333 4.604018536        TRUE
-    146             9    1.5112500 0.006408687        TRUE
-    173            14    0.6561538 0.296241411        TRUE
-    186            90    0.7668539 0.120977029        TRUE
-    188           108    0.8743925 0.312793797        TRUE
-    189             6    0.7540002 0.027018332        TRUE
-    190            33    0.8615625 0.146971721        TRUE
+    # A tibble: 9 × 6
+      source_ip       domain          request_count avg_interval std_dev is_periodic
+      <chr>           <chr>                   <int>        <dbl>   <dbl> <lgl>      
+    1 192.168.25.25   "safebrowsing.…             8       16.2   0.520   TRUE       
+    2 192.168.24.25   "safebrowsing.…             8       16.2   0.165   TRUE       
+    3 192.168.21.25   "safebrowsing.…             7       14.3   4.60    TRUE       
+    4 192.168.25.25   "*\\x00\\x00\\…             9        1.51  0.00641 TRUE       
+    5 192.168.202.120 "WPAD"                     14        0.656 0.296   TRUE       
+    6 192.168.202.49  "ISATAP"                   90        0.767 0.121   TRUE       
+    7 192.168.0.3     "ISATAP"                  108        0.874 0.313   TRUE       
+    8 192.168.202.146 "ISATAP"                    6        0.754 0.0270  TRUE       
+    9 192.168.202.147 "ISATAP"                   33        0.862 0.147   TRUE       
 
 ``` r
 # Задача 10: Определение местоположения и провайдера для топ-10 доменов через их IP-адреса
@@ -570,7 +504,7 @@ for (i in 1:nrow(domain_ip_mapping)) {
         country = data$country,
         city = data$city,
         isp = data$isp
-      ))
+      ))%>% as_tibble()
     } else {
       domain_geo_info <- rbind(domain_geo_info, data.frame(
         domain = domain,
@@ -578,7 +512,7 @@ for (i in 1:nrow(domain_ip_mapping)) {
         country = "Не определено",
         city = "Не определено",
         isp = "Не определено"
-      ))
+      ))%>% as_tibble()
     }
   } else {
     domain_geo_info <- rbind(domain_geo_info, data.frame(
@@ -587,35 +521,26 @@ for (i in 1:nrow(domain_ip_mapping)) {
       country = "Ошибка API",
       city = "Ошибка API",
       isp = "Ошибка API"
-    ))
+    )) %>% as_tibble()
   }
   Sys.sleep(1)
 }
 domain_geo_info
 ```
 
-                                                                        domain
-    1                                                teredo.ipv6.microsoft.com
-    2                                                         tools.google.com
-    3                                                            www.apple.com
-    4                                                           time.apple.com
-    5                                          safebrowsing.clients.google.com
-    6  *\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00
-    7                                                                     WPAD
-    8                                              44.206.168.192.in-addr.arpa
-    9                                                                 HPE8AA67
-    10                                                                  ISATAP
-            ip_address       country          city           isp
-    1             <NA> Не определено Не определено Не определено
-    2             <NA> Не определено Не определено Не определено
-    3     172.19.1.100    Частный IP    Частный IP    Частный IP
-    4             <NA> Не определено Не определено Не определено
-    5             <NA> Не определено Не определено Не определено
-    6   192.168.27.203    Частный IP    Частный IP    Частный IP
-    7  192.168.202.255    Частный IP    Частный IP    Частный IP
-    8             <NA> Не определено Не определено Не определено
-    9  192.168.202.255    Частный IP    Частный IP    Частный IP
-    10            <NA> Не определено Не определено Не определено
+    # A tibble: 10 × 5
+       domain                                         ip_address country city  isp  
+       <chr>                                          <chr>      <chr>   <chr> <chr>
+     1 "teredo.ipv6.microsoft.com"                    <NA>       Не опр… Не о… Не о…
+     2 "tools.google.com"                             <NA>       Не опр… Не о… Не о…
+     3 "www.apple.com"                                172.19.1.… Частны… Част… Част…
+     4 "time.apple.com"                               <NA>       Не опр… Не о… Не о…
+     5 "safebrowsing.clients.google.com"              <NA>       Не опр… Не о… Не о…
+     6 "*\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x… 192.168.2… Частны… Част… Част…
+     7 "WPAD"                                         192.168.2… Частны… Част… Част…
+     8 "44.206.168.192.in-addr.arpa"                  <NA>       Не опр… Не о… Не о…
+     9 "HPE8AA67"                                     192.168.2… Частны… Част… Част…
+    10 "ISATAP"                                       <NA>       Не опр… Не о… Не о…
 
 ## Оценка результата
 
