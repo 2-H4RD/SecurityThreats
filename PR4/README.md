@@ -65,7 +65,7 @@ install.packages("readr")
 
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\Rtmp0sdNAK\downloaded_packages
+        D:\Rtemp\RtmpGmSgb7\downloaded_packages
 
 ``` r
 install.packages("dplyr")
@@ -86,7 +86,7 @@ install.packages("dplyr")
 
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\Rtmp0sdNAK\downloaded_packages
+        D:\Rtemp\RtmpGmSgb7\downloaded_packages
 
 ``` r
 install.packages("stringr")
@@ -98,7 +98,7 @@ install.packages("stringr")
     пакет 'stringr' успешно распакован, MD5-суммы проверены
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\Rtmp0sdNAK\downloaded_packages
+        D:\Rtemp\RtmpGmSgb7\downloaded_packages
 
 ``` r
 install.packages("httr")
@@ -110,7 +110,7 @@ install.packages("httr")
     пакет 'httr' успешно распакован, MD5-суммы проверены
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\Rtmp0sdNAK\downloaded_packages
+        D:\Rtemp\RtmpGmSgb7\downloaded_packages
 
 ``` r
 install.packages("jsonlite")
@@ -131,7 +131,7 @@ install.packages("jsonlite")
 
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\Rtmp0sdNAK\downloaded_packages
+        D:\Rtemp\RtmpGmSgb7\downloaded_packages
 
 ``` r
 library(httr)
@@ -414,91 +414,99 @@ suspicious_ips
     9 192.168.202.147 "ISATAP"                   33        0.862 0.147   TRUE       
 
 ``` r
-# Задача 10: Определение местоположения и провайдера для топ-10 доменов через их IP-адреса
-top_domains <- top_10_domains$query
-domain_ip_mapping <- data.frame(
-  domain = character(),
-  ip_address = character()
-)
-for (domain in top_domains) {
-  domain_data <- dns_data_clean[dns_data_clean$query == domain, ]
-  if (nrow(domain_data) > 0) {
-    ip <- domain_data$destination_ip[1]
-    domain_ip_mapping <- rbind(domain_ip_mapping, data.frame(
-      domain = domain,
-      ip_address = ip
+# Задача 9: Определите местоположение (страну, город) и организацию-провайдера для топ-10 доменов.
+get_geo_info <- function(ip) {
+  if (is.na(ip) || ip == "") {
+     return(tibble(
+      ip_address = NA_character_,
+      country = "IP не определён",
+      city = "IP не определён",
+      isp = "IP не определён"
     ))
   }
-}
-domain_geo_info <- data.frame(
-  domain = character(),
-  ip_address = character(),
-  country = character(),
-  city = character(),
-  isp = character(),
-  stringsAsFactors = FALSE
-)
-for (i in 1:nrow(domain_ip_mapping)) {
-  domain <- domain_ip_mapping$domain[i]
-  ip <- domain_ip_mapping$ip_address[i]
   if (grepl("^(10\\.|192\\.168\\.|172\\.(1[6-9]|2[0-9]|3[0-1])\\.)", ip)) {
-    domain_geo_info <- rbind(domain_geo_info, data.frame(
-      domain = domain,
+    return(tibble(
       ip_address = ip,
       country = "Частный IP",
       city = "Частный IP",
       isp = "Частный IP"
     ))
-    next
   }
   url <- paste0("http://ip-api.com/json/", ip)
   response <- GET(url)
   if (status_code(response) == 200) {
     data <- fromJSON(content(response, "text"))
     if (data$status == "success") {
-      domain_geo_info <- rbind(domain_geo_info, data.frame(
-        domain = domain,
+      return(tibble(
         ip_address = ip,
         country = data$country,
         city = data$city,
         isp = data$isp
-      ))%>% as_tibble()
+      ))
     } else {
-      domain_geo_info <- rbind(domain_geo_info, data.frame(
-        domain = domain,
+      return(tibble(
         ip_address = ip,
-        country = "Не определено",
-        city = "Не определено",
-        isp = "Не определено"
-      ))%>% as_tibble()
+        country = paste("API ошибка:", data$status),
+        city = paste("API ошибка:", data$status),
+        isp = paste("API ошибка:", data$status)
+      ))
     }
   } else {
-    domain_geo_info <- rbind(domain_geo_info, data.frame(
-      domain = domain,
+    return(tibble(
       ip_address = ip,
       country = "Ошибка API",
       city = "Ошибка API",
       isp = "Ошибка API"
-    )) %>% as_tibble()
+    ))
   }
-  Sys.sleep(1)
 }
-domain_geo_info
+
+dns_with_dest_ip <- dns_data_clean %>%
+  filter(!is.na(destination_ip)) %>%
+  select(query, destination_ip) %>%
+  distinct()
+relevant_dns <- dns_with_dest_ip %>%
+  filter(query %in% top_10_domains$query)
+geo_results_df <- tibble(
+  ip_address = character(),
+  country = character(),
+  city = character(),
+  isp = character()
+)
+#Запросы к API
+unique_ips_to_check <- unique(relevant_dns$destination_ip)
+for (ip in unique_ips_to_check) {
+  geo_info_row <- get_geo_info(ip)
+  geo_results_df <- bind_rows(geo_results_df, geo_info_row)
+}
+domain_geo_info_final <- relevant_dns %>%
+  left_join(geo_results_df, by = c("destination_ip" = "ip_address")) %>%
+  rename(ip_address = destination_ip) %>%
+  select(domain = query, ip_address, country, city, isp)
+domain_order_factor <- factor(domain_geo_info_final$domain, levels = top_10_domains$query)
+domain_geo_info_final_sorted <- domain_geo_info_final %>%
+  mutate(domain_order = domain_order_factor) %>%
+  arrange(domain_order) %>%
+  select(-domain_order)
+
+# Вывод результата, группируя по домену
+print(domain_geo_info_final_sorted)
 ```
 
-    # A tibble: 10 × 5
-       domain                                         ip_address country city  isp  
-       <chr>                                          <chr>      <chr>   <chr> <chr>
-     1 "teredo.ipv6.microsoft.com"                    <NA>       Не опр… Не о… Не о…
-     2 "tools.google.com"                             <NA>       Не опр… Не о… Не о…
-     3 "www.apple.com"                                172.19.1.… Частны… Част… Част…
-     4 "time.apple.com"                               <NA>       Не опр… Не о… Не о…
-     5 "safebrowsing.clients.google.com"              <NA>       Не опр… Не о… Не о…
-     6 "*\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x… 192.168.2… Частны… Част… Част…
-     7 "WPAD"                                         192.168.2… Частны… Част… Част…
-     8 "44.206.168.192.in-addr.arpa"                  <NA>       Не опр… Не о… Не о…
-     9 "HPE8AA67"                                     192.168.2… Частны… Част… Част…
-    10 "ISATAP"                                       <NA>       Не опр… Не о… Не о…
+    # A tibble: 1,213 × 5
+       domain                    ip_address       country       city       isp      
+       <chr>                     <chr>            <chr>         <chr>      <chr>    
+     1 teredo.ipv6.microsoft.com fec0:0:0:ffff::2 Switzerland   Morat      Internet…
+     2 teredo.ipv6.microsoft.com fec0:0:0:ffff::1 Switzerland   Morat      Internet…
+     3 teredo.ipv6.microsoft.com fec0:0:0:ffff::3 Switzerland   Morat      Internet…
+     4 teredo.ipv6.microsoft.com 192.168.207.4    Частный IP    Частный IP Частный …
+     5 teredo.ipv6.microsoft.com 192.168.0.1      Частный IP    Частный IP Частный …
+     6 tools.google.com          192.168.207.4    Частный IP    Частный IP Частный …
+     7 tools.google.com          192.168.206.44   Частный IP    Частный IP Частный …
+     8 tools.google.com          156.154.70.22    United States New York   Neustar …
+     9 tools.google.com          8.26.56.26       United States Clifton    Flexenti…
+    10 tools.google.com          68.87.75.198     United States Pittsburgh Comcast …
+    # ℹ 1,203 more rows
 
 ## Оценка результата
 
