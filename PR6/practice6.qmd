@@ -218,10 +218,10 @@ webpage <- read_html(webpage_url)
 event_df_raw <- html_table(webpage)[[1]]
 event_df <- event_df_raw %>%
   mutate(
-    `Current Windows Event ID` = as.numeric(`Current Windows Event ID`), # Преобразуем ID в число
-    `Legacy Windows Event ID` = as.numeric(`Legacy Windows Event ID`), # Преобразуем Legacy ID в число
-    `Potential criticality` = as.character(`Potential Criticality`), # Преобразуем критичность в строку
-    `Event Summary` = as.character(`Event Summary`) # Преобразуем описание в строку
+    `Current Windows Event ID` = as.numeric(`Current Windows Event ID`),
+    `Legacy Windows Event ID` = as.numeric(`Legacy Windows Event ID`),
+    `Potential criticality` = as.character(`Potential Criticality`),
+    `Event Summary` = as.character(`Event Summary`)
   )
 head(event_df,10)
 ```

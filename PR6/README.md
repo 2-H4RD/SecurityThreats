@@ -57,7 +57,7 @@ install.packages("jsonlite")
 
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpaWjtXy\downloaded_packages
+        D:\Rtemp\RtmpkXhIKJ\downloaded_packages
 
 ``` r
 install.packages("dplyr")
@@ -68,17 +68,8 @@ install.packages("dplyr")
 
     пакет 'dplyr' успешно распакован, MD5-суммы проверены
 
-    Warning: не могу удалить прежнюю установку пакета 'dplyr'
-
-    Warning in file.copy(savedcopy, lib, recursive = TRUE): проблема с копированием
-    D:\Rlib\00LOCK\dplyr\libs\x64\dplyr.dll в D:\Rlib\dplyr\libs\x64\dplyr.dll:
-    Permission denied
-
-    Warning: восстановлен 'dplyr'
-
-
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpaWjtXy\downloaded_packages
+        D:\Rtemp\RtmpkXhIKJ\downloaded_packages
 
 ``` r
 install.packages("tidyr")
@@ -89,17 +80,8 @@ install.packages("tidyr")
 
     пакет 'tidyr' успешно распакован, MD5-суммы проверены
 
-    Warning: не могу удалить прежнюю установку пакета 'tidyr'
-
-    Warning in file.copy(savedcopy, lib, recursive = TRUE): проблема с копированием
-    D:\Rlib\00LOCK\tidyr\libs\x64\tidyr.dll в D:\Rlib\tidyr\libs\x64\tidyr.dll:
-    Permission denied
-
-    Warning: восстановлен 'tidyr'
-
-
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpaWjtXy\downloaded_packages
+        D:\Rtemp\RtmpkXhIKJ\downloaded_packages
 
 ``` r
 install.packages("xml2")
@@ -110,17 +92,8 @@ install.packages("xml2")
 
     пакет 'xml2' успешно распакован, MD5-суммы проверены
 
-    Warning: не могу удалить прежнюю установку пакета 'xml2'
-
-    Warning in file.copy(savedcopy, lib, recursive = TRUE): проблема с копированием
-    D:\Rlib\00LOCK\xml2\libs\x64\xml2.dll в D:\Rlib\xml2\libs\x64\xml2.dll:
-    Permission denied
-
-    Warning: восстановлен 'xml2'
-
-
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpaWjtXy\downloaded_packages
+        D:\Rtemp\RtmpkXhIKJ\downloaded_packages
 
 ``` r
 install.packages("rvest")
@@ -132,7 +105,7 @@ install.packages("rvest")
     пакет 'rvest' успешно распакован, MD5-суммы проверены
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpaWjtXy\downloaded_packages
+        D:\Rtemp\RtmpkXhIKJ\downloaded_packages
 
 ``` r
 install.packages("R.utils")
@@ -144,7 +117,7 @@ install.packages("R.utils")
     пакет 'R.utils' успешно распакован, MD5-суммы проверены
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpaWjtXy\downloaded_packages
+        D:\Rtemp\RtmpkXhIKJ\downloaded_packages
 
 ``` r
 library(jsonlite)
@@ -1040,10 +1013,10 @@ webpage <- read_html(webpage_url)
 event_df_raw <- html_table(webpage)[[1]]
 event_df <- event_df_raw %>%
   mutate(
-    `Current Windows Event ID` = as.numeric(`Current Windows Event ID`), # Преобразуем ID в число
-    `Legacy Windows Event ID` = as.numeric(`Legacy Windows Event ID`), # Преобразуем Legacy ID в число
-    `Potential criticality` = as.character(`Potential Criticality`), # Преобразуем критичность в строку
-    `Event Summary` = as.character(`Event Summary`) # Преобразуем описание в строку
+    `Current Windows Event ID` = as.numeric(`Current Windows Event ID`),
+    `Legacy Windows Event ID` = as.numeric(`Legacy Windows Event ID`),
+    `Potential criticality` = as.character(`Potential Criticality`),
+    `Event Summary` = as.character(`Event Summary`)
   )
 ```
 
