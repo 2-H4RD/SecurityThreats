@@ -68,7 +68,7 @@ install.packages("readr")
 
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpIRifHT\downloaded_packages
+        D:\Rtemp\RtmpQFSUZF\downloaded_packages
 
 ``` r
 install.packages("dplyr")
@@ -89,7 +89,7 @@ install.packages("dplyr")
 
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpIRifHT\downloaded_packages
+        D:\Rtemp\RtmpQFSUZF\downloaded_packages
 
 ``` r
 install.packages("tidyr") 
@@ -110,7 +110,7 @@ install.packages("tidyr")
 
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpIRifHT\downloaded_packages
+        D:\Rtemp\RtmpQFSUZF\downloaded_packages
 
 ``` r
 install.packages("stringr") 
@@ -122,7 +122,7 @@ install.packages("stringr")
     пакет 'stringr' успешно распакован, MD5-суммы проверены
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpIRifHT\downloaded_packages
+        D:\Rtemp\RtmpQFSUZF\downloaded_packages
 
 ``` r
 install.packages("lubridate") 
@@ -143,7 +143,7 @@ install.packages("lubridate")
 
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpIRifHT\downloaded_packages
+        D:\Rtemp\RtmpQFSUZF\downloaded_packages
 
 ``` r
 install.packages("janitor") 
@@ -155,7 +155,7 @@ install.packages("janitor")
     пакет 'janitor' успешно распакован, MD5-суммы проверены
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpIRifHT\downloaded_packages
+        D:\Rtemp\RtmpQFSUZF\downloaded_packages
 
 ``` r
 install.packages("R.utils") 
@@ -167,7 +167,7 @@ install.packages("R.utils")
     пакет 'R.utils' успешно распакован, MD5-суммы проверены
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpIRifHT\downloaded_packages
+        D:\Rtemp\RtmpQFSUZF\downloaded_packages
 
 ``` r
 install.packages("jsonlite") 
@@ -188,7 +188,7 @@ install.packages("jsonlite")
 
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpIRifHT\downloaded_packages
+        D:\Rtemp\RtmpQFSUZF\downloaded_packages
 
 ``` r
 install.packages("httr") 
@@ -200,7 +200,7 @@ install.packages("httr")
     пакет 'httr' успешно распакован, MD5-суммы проверены
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpIRifHT\downloaded_packages
+        D:\Rtemp\RtmpQFSUZF\downloaded_packages
 
 ``` r
 install.packages("V8") 
@@ -221,7 +221,7 @@ install.packages("V8")
 
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpIRifHT\downloaded_packages
+        D:\Rtemp\RtmpQFSUZF\downloaded_packages
 
 ``` r
 install.packages("igraph") 
@@ -242,7 +242,7 @@ install.packages("igraph")
 
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpIRifHT\downloaded_packages
+        D:\Rtemp\RtmpQFSUZF\downloaded_packages
 
 ``` r
 install.packages("fpc") 
@@ -254,7 +254,7 @@ install.packages("fpc")
     пакет 'fpc' успешно распакован, MD5-суммы проверены
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpIRifHT\downloaded_packages
+        D:\Rtemp\RtmpQFSUZF\downloaded_packages
 
 ``` r
 install.packages("mclust")
@@ -275,7 +275,7 @@ install.packages("mclust")
 
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpIRifHT\downloaded_packages
+        D:\Rtemp\RtmpQFSUZF\downloaded_packages
 
 ``` r
 library("readr")
@@ -286,6 +286,8 @@ library("readr")
 ``` r
 library("dplyr")
 ```
+
+    Warning: пакет 'dplyr' был собран под R версии 4.5.2
 
 
     Присоединяю пакет: 'dplyr'
@@ -313,6 +315,8 @@ library("stringr")
 ``` r
 library("lubridate") 
 ```
+
+    Warning: пакет 'lubridate' был собран под R версии 4.5.2
 
 
     Присоединяю пакет: 'lubridate'
@@ -384,6 +388,8 @@ library("R.utils")
 library("jsonlite") 
 ```
 
+    Warning: пакет 'jsonlite' был собран под R версии 4.5.2
+
 
     Присоединяю пакет: 'jsonlite'
 
@@ -400,6 +406,8 @@ library("httr")
 ``` r
 library("V8") 
 ```
+
+    Warning: пакет 'V8' был собран под R версии 4.5.2
 
     Using V8 engine 11.9.169.6
 
@@ -458,8 +466,9 @@ library("mclust")
 
         count
 
+###Задание 1: Импорт данных
+
 ``` r
-#Задание 1: Импорт данных
 filename <- "P2_wifi_data.csv"
 url <- "https://storage.yandexcloud.net/dataset.ctfsec/P2_wifi_data.csv"
 if (!file.exists(filename)) {
@@ -526,11 +535,60 @@ wifi_station_data <- read_csv(filename, skip = skip_lines_station,
       problems(dat)
 
 ``` r
-#Задание 2-3: Приведение даннных к виду "аккуратных" и просмотр
+manuf_file_name <- "wireshark_manuf.txt"
+manuf_download_url <- "https://www.wireshark.org/download/automated/data/manuf"
+
+if (!file.exists(manuf_file_name)) {
+  tryCatch({
+    download.file(url = manuf_download_url, destfile = manuf_file_name, mode = "wb")
+  }, error = function(e){})
+}
+parse_manuf_file <- function(file_path) {
+  lines <- readLines(file_path, encoding = "UTF-8")
+  lines <- lines[trimws(lines) != ""]
+  oui_list <- character(0)
+  manufacturer_list <- character(0)
+  for (line in lines) {
+    parts <- strsplit(line, "\t", fixed = TRUE)[[1]]
+    if (length(parts) < 2) {
+      next
+    }
+    raw_oui <- parts[1]
+    manufacturer <- parts[2]
+    normalized_oui <- toupper(gsub("[^0-9A-Fa-f]", "", raw_oui))
+    if (nchar(normalized_oui) == 6) {
+      oui_list <- c(oui_list, normalized_oui)
+      manufacturer_list <- c(manufacturer_list, manufacturer)
+    } else if (nchar(normalized_oui) == 12) {
+      next
+    } else {
+      next
+    }
+  }
+  oui_df <- data.frame(
+    oui = oui_list,
+    manufacturer = manufacturer_list,
+    stringsAsFactors = FALSE
+  )
+
+  if (nrow(oui_df) > 0) {
+    unique_indices <- !duplicated(oui_df$oui)
+    oui_df_unique <- oui_df[unique_indices, ]
+    return(oui_df_unique)
+  } else {
+    return(data.frame(oui = character(0), manufacturer = character(0), stringsAsFactors = FALSE))
+  }
+}
+oui_db <- parse_manuf_file(manuf_file_name)
+```
+
+###Задание 2-3: Приведение даннных к виду “аккуратных” и просмотр
+
+``` r
 names(wifi_ap_data) <- janitor::make_clean_names(names(wifi_ap_data))
 wifi_ap_data <- wifi_ap_data %>%
   mutate(
-    first_time_seen = lubridate::ymd_hms(first_time_seen, tz = "UTC"), # Преобразуем в POSIXct
+    first_time_seen = lubridate::ymd_hms(first_time_seen, tz = "UTC"),
     last_time_seen = lubridate::ymd_hms(last_time_seen, tz = "UTC")
   )
 wifi_ap_data <- wifi_ap_data %>%
@@ -592,8 +650,9 @@ glimpse(wifi_station_data)
     $ bssid           <chr> "BE:F1:71:D5:17:8B", "(not associated)", "BE:F1:71:D6:…
     $ probed_essi_ds  <chr> "C322U13 3965", "IT2 Wireless", "C322U21 0566", "C322U…
 
+###Задание 5: Определение небезопасных точек доступа
+
 ``` r
-#Задание 5: Определение небезопасных точек доступа
 unsafe_aps <- wifi_ap_data %>%
   filter(privacy == "OPN")
 
@@ -617,57 +676,63 @@ print(unsafe_aps)
     # ℹ 8 more variables: authentication <chr>, power <dbl>, number_beacons <dbl>,
     #   number_iv <dbl>, lan_ip <chr>, id_length <dbl>, essid <chr>, key <chr>
 
+###Задание 6: Определение производителя по OUI
+
 ``` r
-#Задание 6: Определение производителя по OUI
-get_manufacturer_oui <- function(oui) {
-  if (is.na(oui) || oui == "") {
+get_manufacturer_oui_local <- function(oui, oui_db) {
+  if (is.na(oui) || oui == "" || is.null(oui)) {
     return(NA_character_)
   }
-  url <- paste0("https://api.macvendors.com/", oui)
-  response <- GET(url)
-  if (status_code(response) == 200) {
-    manufacturer <- content(response, "text", encoding = "UTF-8")
-    if (is.na(manufacturer) || manufacturer == "" || grepl("Not Found|Vendor not found|Unknown", manufacturer, ignore.case = TRUE)) {
-      return(NA_character_)
-    }
-    return(manufacturer)
-  } else if (status_code(response) == 404) {
-      return(NA_character_)
-  } else if (status_code(response) == 429) {
-      Sys.sleep(5)
-      return(NA_character_)
+  normalized_input_oui <- toupper(gsub("[^0-9A-Fa-f]", "", as.character(oui)))
+  if (nchar(normalized_input_oui) >= 6) {
+    normalized_input_oui <- substr(normalized_input_oui, 1, 6)
+  } else {
+    return(NA_character_)
+  }
+  result <- oui_db$manufacturer[oui_db$oui == normalized_input_oui]
+  if (length(result) > 0 && !is.na(result[1])) {
+    return(result[1])
   } else {
     return(NA_character_)
   }
 }
+
 all_ap_macs <- wifi_ap_data$bssid
-all_ap_macs_clean <- all_ap_macs[!is.na(all_ap_macs)]
-unique_ouis_ap <- unique(substr(all_ap_macs_clean, 1, 8))
+all_ap_macs_clean <- all_ap_macs[!is.na(all_ap_macs) & all_ap_macs != ""]
+unique_ouis_ap <- unique(toupper(gsub("[^0-9A-Fa-f]", "", all_ap_macs_clean)))
+unique_ouis_ap <- substr(unique_ouis_ap, 1, 6)
+unique_ouis_ap <- unique_ouis_ap[nchar(unique_ouis_ap) == 6]
+
 manufacturers_ap <- character(length(unique_ouis_ap))
 names(manufacturers_ap) <- unique_ouis_ap
+
 for (oui in unique_ouis_ap) {
-  if (is.na(oui) || oui == "") {
-    manufacturers_ap[oui] <- NA_character_
-    next
-  }
-  manufacturer <- get_manufacturer_oui(oui)
+  manufacturer <- get_manufacturer_oui_local(oui, oui_db)
   manufacturers_ap[oui] <- manufacturer
-  Sys.sleep(1.5)
 }
-manufacturer_lookup_table <- tibble(
+
+manufacturer_lookup_table <- data.frame(
   oui = names(manufacturers_ap),
-  manufacturer = manufacturers_ap
+  manufacturer = manufacturers_ap,
+  stringsAsFactors = FALSE
 )
+
+manufacturer_lookup_table <- manufacturer_lookup_table[!duplicated(manufacturer_lookup_table$oui), ]
+
 wifi_ap_data_with_manuf <- wifi_ap_data %>%
   mutate(
-    oui = ifelse(is.na(bssid) | bssid == "", NA_character_, substr(bssid, 1, 8))
+    oui = ifelse(is.na(bssid) | bssid == "", NA_character_, substr(toupper(gsub("[^0-9A-Fa-f]", "", bssid)), 1, 6))
+  ) %>%
+  mutate(
+    oui = ifelse(nchar(oui) == 6, oui, NA_character_)
   ) %>%
   left_join(
     manufacturer_lookup_table,
     by = c("oui" = "oui")
   ) %>%
-  select(-oui) %>%
-  relocate(manufacturer, .after = bssid)
+  relocate(all_of("manufacturer"), .after = all_of("bssid")) %>% # Перемещаем manufacturer после bssid
+  select(-oui) # Удаляем вспомогательный столбец oui
+
 wifi_ap_data <- wifi_ap_data_with_manuf
 print(wifi_ap_data)
 ```
@@ -675,23 +740,25 @@ print(wifi_ap_data)
     # A tibble: 167 × 16
        bssid      manufacturer first_time_seen     last_time_seen      channel speed
        <chr>      <chr>        <dttm>              <dttm>                <dbl> <dbl>
-     1 BE:F1:71:… <NA>         2023-07-28 09:13:03 2023-07-28 11:50:50       1   195
-     2 6E:C7:EC:… <NA>         2023-07-28 09:13:03 2023-07-28 11:55:12       1   130
-     3 9A:75:A8:… <NA>         2023-07-28 09:13:03 2023-07-28 11:53:31       1   360
-     4 4A:EC:1E:… <NA>         2023-07-28 09:13:03 2023-07-28 11:04:01       7   360
-     5 D2:6D:52:… <NA>         2023-07-28 09:13:03 2023-07-28 10:30:19       6   130
-     6 E8:28:C1:… Eltex Enter… 2023-07-28 09:13:03 2023-07-28 11:55:38       6   130
-     7 BE:F1:71:… <NA>         2023-07-28 09:13:03 2023-07-28 11:50:44      11   195
-     8 0A:C5:E1:… <NA>         2023-07-28 09:13:03 2023-07-28 11:36:31      11   130
-     9 38:1A:52:… Seiko Epson… 2023-07-28 09:13:03 2023-07-28 10:25:02      11   130
-    10 BE:F1:71:… <NA>         2023-07-28 09:13:03 2023-07-28 10:29:21       1   195
+     1 BE:F1:71:…  <NA>        2023-07-28 09:13:03 2023-07-28 11:50:50       1   195
+     2 6E:C7:EC:…  <NA>        2023-07-28 09:13:03 2023-07-28 11:55:12       1   130
+     3 9A:75:A8:…  <NA>        2023-07-28 09:13:03 2023-07-28 11:53:31       1   360
+     4 4A:EC:1E:…  <NA>        2023-07-28 09:13:03 2023-07-28 11:04:01       7   360
+     5 D2:6D:52:…  <NA>        2023-07-28 09:13:03 2023-07-28 10:30:19       6   130
+     6 E8:28:C1:… "EltexEnter… 2023-07-28 09:13:03 2023-07-28 11:55:38       6   130
+     7 BE:F1:71:…  <NA>        2023-07-28 09:13:03 2023-07-28 11:50:44      11   195
+     8 0A:C5:E1:…  <NA>        2023-07-28 09:13:03 2023-07-28 11:36:31      11   130
+     9 38:1A:52:… "SeikoEpson… 2023-07-28 09:13:03 2023-07-28 10:25:02      11   130
+    10 BE:F1:71:…  <NA>        2023-07-28 09:13:03 2023-07-28 10:29:21       1   195
     # ℹ 157 more rows
     # ℹ 10 more variables: privacy <chr>, cipher <chr>, authentication <chr>,
     #   power <dbl>, number_beacons <dbl>, number_iv <dbl>, lan_ip <chr>,
     #   id_length <dbl>, essid <chr>, key <chr>
 
+###Задание 7: Выявить устройства, использующие последнюю версию
+протокола шифрования WPA3
+
 ``` r
-#Задание 7: Выявить устройства, использующие последнюю версию протокола шифрования WPA3
 wpa3_aps <- wifi_ap_data %>%
   filter(grepl("WPA3", authentication, ignore.case = TRUE) | grepl("WPA3", privacy, ignore.case = TRUE))
 print(wpa3_aps %>% select (bssid,privacy,essid))
@@ -709,8 +776,10 @@ print(wpa3_aps %>% select (bssid,privacy,essid))
     7 3A:DA:00:F9:0C:02 WPA3 WPA2 "iPhone XS Max \U0001f98a\U0001f431\U0001f98a"
     8 76:C5:A0:70:08:96 WPA3 WPA2  <NA>                                         
 
+###Задание 8: Сортировка точек доступа по интервалу времени на связи (с
+учётом сессий)
+
 ``` r
-#Задание 8: Сортировка точек доступа по интервалу времени на связи (с учётом сессий)
 join_sessions <- function(ap_data_single_bssid, threshold_seconds = 2700) {
   ap_data_single_bssid <- ap_data_single_bssid %>% filter(!is.na(first_time_seen) & !is.na(last_time_seen))
   if (nrow(ap_data_single_bssid) == 0) return(tibble(bssid = character(), total_duration_seconds = numeric()))
@@ -736,7 +805,6 @@ join_sessions <- function(ap_data_single_bssid, threshold_seconds = 2700) {
     bssid = rep(ap_data_sorted$bssid[1], length(durations)), # Повторяем BSSID для каждой сессии
     total_duration_seconds = durations
   )
-
   return(result)
 }
 wifi_ap_sorted_by_duration <- wifi_ap_data %>%
@@ -783,9 +851,9 @@ print(wifi_ap_sorted_by_duration)
     10 8E:55:4A:85:5B:01                         19446
     # ℹ 157 more rows
 
-``` r
-#Задание 9: Обнаружить топ-10 самых быстрых точек доступа
+###Задание 9: Обнаружить топ-10 самых быстрых точек доступа
 
+``` r
 top_10_fastest_aps <- wifi_ap_data %>%
   filter(!is.na(speed)) %>%
   arrange(desc(speed)) %>%
@@ -794,21 +862,22 @@ print(select(top_10_fastest_aps, bssid, essid, speed, manufacturer))
 ```
 
     # A tibble: 10 × 4
-       bssid             essid              speed manufacturer         
-       <chr>             <chr>              <dbl> <chr>                
-     1 26:20:53:0C:98:E8 <NA>                 866 <NA>                 
-     2 96:FF:FC:91:EF:64 <NA>                 866 <NA>                 
-     3 CE:48:E7:86:4E:33 iPhone (Анастасия)   866 <NA>                 
-     4 8E:1F:94:96:DA:FD iPhone (Анастасия)   866 <NA>                 
-     5 9A:75:A8:B9:04:1E KC                   360 <NA>                 
-     6 4A:EC:1E:DB:BF:95 POCO X5 Pro 5G       360 <NA>                 
-     7 56:C5:2B:9F:84:90 OnePlus 6T           360 <NA>                 
-     8 E8:28:C1:DC:B2:41 MIREA_GUESTS         360 Eltex Enterprise Ltd.
-     9 E8:28:C1:DC:B2:40 MIREA_HOTSPOT        360 Eltex Enterprise Ltd.
-    10 E8:28:C1:DC:B2:42 <NA>                 360 Eltex Enterprise Ltd.
+       bssid             essid              speed manufacturer
+       <chr>             <chr>              <dbl> <chr>       
+     1 26:20:53:0C:98:E8 <NA>                 866 <NA>        
+     2 96:FF:FC:91:EF:64 <NA>                 866 <NA>        
+     3 CE:48:E7:86:4E:33 iPhone (Анастасия)   866 <NA>        
+     4 8E:1F:94:96:DA:FD iPhone (Анастасия)   866 <NA>        
+     5 9A:75:A8:B9:04:1E KC                   360 <NA>        
+     6 4A:EC:1E:DB:BF:95 POCO X5 Pro 5G       360 <NA>        
+     7 56:C5:2B:9F:84:90 OnePlus 6T           360 <NA>        
+     8 E8:28:C1:DC:B2:41 MIREA_GUESTS         360 EltexEnterpr
+     9 E8:28:C1:DC:B2:40 MIREA_HOTSPOT        360 EltexEnterpr
+    10 E8:28:C1:DC:B2:42 <NA>                 360 EltexEnterpr
+
+###Задание 10: Сортировка точек доступа по частоте beacon-пакетов
 
 ``` r
-#Задание 10: Сортировка точек доступа по частоте beacon-пакетов
 wifi_ap_with_beacon_freq <- wifi_ap_data %>%
   mutate(
     time_diff_seconds = as.numeric(difftime(last_time_seen, first_time_seen, units = "secs")),
@@ -839,67 +908,87 @@ print(select(wifi_ap_sorted_by_beacon_freq, bssid, essid, number_beacons, time_d
     10 38:1A:52:0D:84:D7 "EBFCD57…            704              4319            0.163
     # ℹ 114 more rows
 
-``` r
-#Задание 11: Определение производителя для клиентских устройств
-#get_manufacturer_oui <- function(oui) {
-#  if (is.na(oui) || oui == "") {
-#    return(NA_character_)
-#  }
-#  url <- paste0("https://api.macvendors.com/", oui)
-#  response <- GET(url)
-#  if (status_code(response) == 200) {
-#    manufacturer <- content(response, "text", encoding = "UTF-8")
-#    if (is.na(manufacturer) || manufacturer == "" || grepl("Not Found|Vendor not found|Unknown", manufacturer, #ignore.case = TRUE)) {
-#      return(NA_character_)
-#    }
-#    return(manufacturer)
-#  } else if (status_code(response) == 404) {
-#      return(NA_character_)
-#  } else if (status_code(response) == 429) {
-#      Sys.sleep(5)
-#      return(NA_character_)
-#  } else {
-#    return(NA_character_)
-#  }
-#}
-#
-#all_station_macs <- wifi_station_data$station_mac
-#all_station_macs_clean <- all_station_macs[!is.na(all_station_macs)]
-#unique_ouis_station <- unique(substr(all_station_macs_clean, 1, 8))
-#
-#cat("Найдено уникальных OUI для клиентских устройств:", length(unique_ouis_station), "\n")
-#manufacturers_station <- character(length(unique_ouis_station))
-#names(manufacturers_station) <- unique_ouis_station
-#for (oui in unique_ouis_station) {
-#  if (is.na(oui) || oui == "") {
-#    manufacturers_station[oui] <- NA_character_
-#    next
-#  }
-#  manufacturer <- get_manufacturer_oui(oui)
-#  manufacturers_station[oui] <- manufacturer
-#  Sys.sleep(1.5)
-#}
-#manufacturer_lookup_table_station <- tibble(
-#  oui = names(manufacturers_station),
-#  manufacturer = manufacturers_station
-#)
-#wifi_station_data_with_manuf <- wifi_station_data %>%
-#  mutate(
-#    oui = ifelse(is.na(station_mac) | station_mac == "", NA_character_, substr(station_mac, 1, 8))
-#  ) %>%
-#  left_join(
-#    manufacturer_lookup_table_station,
-#    by = c("oui" = "oui")
-#  ) %>%
-#  select(-oui) %>%
-#  relocate(manufacturer, .after = station_mac)
-#wifi_station_data <- wifi_station_data_with_manuf
-#cat("\n--- Таблица клиентов (Station) после объединения с производителями ---\n")
-#print(wifi_station_data)
-```
+###Задание 11: Определение производителя для клиентских устройств
 
 ``` r
-#Задание 12: Обнаружить устройства, которые НЕ рандомизируют свой MAC адрес
+get_manufacturer_oui_local <- function(oui, oui_db) {
+  if (is.na(oui) || oui == "" || is.null(oui)) {
+    return(NA_character_)
+  }
+  normalized_input_oui <- toupper(gsub("[^0-9A-Fa-f]", "", as.character(oui)))
+  if (nchar(normalized_input_oui) >= 6) {
+    normalized_input_oui <- substr(normalized_input_oui, 1, 6)
+  } else {
+    return(NA_character_)
+  }
+  result <- oui_db$manufacturer[oui_db$oui == normalized_input_oui]
+  if (length(result) > 0 && !is.na(result[1])) {
+    return(result[1])
+  } else {
+    return(NA_character_)
+  }
+}
+
+all_station_macs <- wifi_station_data$station_mac
+all_station_macs_clean <- all_station_macs[!is.na(all_station_macs) & all_station_macs != ""]
+unique_ouis_station <- unique(toupper(gsub("[^0-9A-Fa-f]", "", all_station_macs_clean)))
+unique_ouis_station <- substr(unique_ouis_station, 1, 6)
+unique_ouis_station <- unique_ouis_station[nchar(unique_ouis_station) == 6]
+
+manufacturers_station <- character(length(unique_ouis_station))
+names(manufacturers_station) <- unique_ouis_station
+
+for (oui in unique_ouis_station) {
+  manufacturer <- get_manufacturer_oui_local(oui, oui_db)
+  manufacturers_station[oui] <- manufacturer
+}
+
+manufacturer_lookup_table_station <- data.frame(
+  oui = names(manufacturers_station),
+  manufacturer = manufacturers_station,
+  stringsAsFactors = FALSE
+)
+
+manufacturer_lookup_table_station <- manufacturer_lookup_table_station[!duplicated(manufacturer_lookup_table_station$oui), ]
+
+wifi_station_data_with_manuf <- wifi_station_data %>%
+  mutate(
+    oui = ifelse(is.na(station_mac) | station_mac == "", NA_character_, substr(toupper(gsub("[^0-9A-Fa-f]", "", station_mac)), 1, 6))
+  ) %>%
+  mutate(
+    oui = ifelse(nchar(oui) == 6, oui, NA_character_)
+  ) %>%
+  left_join(
+    manufacturer_lookup_table_station,
+    by = c("oui" = "oui")
+  ) %>%
+  select(-oui) %>%
+  relocate(all_of("manufacturer"), .after = all_of("station_mac"))
+
+wifi_station_data <- wifi_station_data_with_manuf
+print(wifi_station_data)
+```
+
+    # A tibble: 12,081 × 8
+       station_mac       manufacturer  first_time_seen     last_time_seen      power
+       <chr>             <chr>         <dttm>              <dttm>              <dbl>
+     1 CA:66:3B:8F:56:DD  <NA>         2023-07-28 09:13:03 2023-07-28 10:59:44   -33
+     2 96:35:2D:3D:85:E6  <NA>         2023-07-28 09:13:03 2023-07-28 09:13:03   -65
+     3 5C:3A:45:9E:1A:7B "ChongqingFu… 2023-07-28 09:13:03 2023-07-28 11:51:54   -39
+     4 C0:E4:34:D8:E7:E5 "AzureWaveTe… 2023-07-28 09:13:03 2023-07-28 11:53:16   -61
+     5 5E:8E:A6:5E:34:81  <NA>         2023-07-28 09:13:04 2023-07-28 09:13:04   -53
+     6 10:51:07:CB:33:E7 "Intel      … 2023-07-28 09:13:05 2023-07-28 11:56:06   -43
+     7 68:54:5A:40:35:9E "Intel      … 2023-07-28 09:13:06 2023-07-28 11:50:50   -31
+     8 74:4C:A1:70:CE:F7 "LiteonTechn… 2023-07-28 09:13:06 2023-07-28 09:20:01   -71
+     9 8A:A3:5A:33:76:57  <NA>         2023-07-28 09:13:06 2023-07-28 10:20:27   -74
+    10 CA:54:C4:8B:B5:3A  <NA>         2023-07-28 09:13:06 2023-07-28 11:55:04   -65
+    # ℹ 12,071 more rows
+    # ℹ 3 more variables: number_packets <dbl>, bssid <chr>, probed_essi_ds <chr>
+
+###Задание 12: Обнаружить устройства, которые НЕ рандомизируют свой MAC
+адрес
+
+``` r
 is_not_randomized_vectorized <- function(mac_addresses) {
   is_na_or_empty <- is.na(mac_addresses) | (mac_addresses == "")
   result <- rep(NA, length(mac_addresses))
@@ -928,24 +1017,26 @@ print(wifi_station_data%>%
         filter(does_not_randomize == TRUE))
 ```
 
-    # A tibble: 10 × 8
-       station_mac      first_time_seen     last_time_seen      power number_packets
-       <chr>            <dttm>              <dttm>              <dbl>          <dbl>
-     1 00:95:69:E7:7F:… 2023-07-28 09:13:11 2023-07-28 11:56:07   -69           2245
-     2 00:95:69:E7:7C:… 2023-07-28 09:13:11 2023-07-28 11:56:13   -55           4096
-     3 00:95:69:E7:7D:… 2023-07-28 09:13:15 2023-07-28 11:56:17   -33           8171
-     4 00:90:4C:E6:54:… 2023-07-28 09:16:59 2023-07-28 10:21:15   -65             16
-     5 00:04:35:22:4F:… 2023-07-28 09:46:33 2023-07-28 11:15:49   -83             20
-     6 00:E9:3A:67:93:… 2023-07-28 10:15:18 2023-07-28 11:55:11   -73             22
-     7 00:E9:3A:F8:10:… 2023-07-28 10:20:19 2023-07-28 10:20:19   -73              1
-     8 00:0C:E7:A8:D6:… 2023-07-28 10:22:07 2023-07-28 10:22:08   -67              3
-     9 00:98:8C:CE:8E:… 2023-07-28 10:34:53 2023-07-28 10:35:13   -65              4
-    10 00:F4:8D:F7:C5:… 2023-07-28 10:45:04 2023-07-28 11:43:26   -73              8
-    # ℹ 3 more variables: bssid <chr>, probed_essi_ds <chr>,
+    # A tibble: 10 × 9
+       station_mac       manufacturer  first_time_seen     last_time_seen      power
+       <chr>             <chr>         <dttm>              <dttm>              <dbl>
+     1 00:95:69:E7:7F:35 "LSDSciencea… 2023-07-28 09:13:11 2023-07-28 11:56:07   -69
+     2 00:95:69:E7:7C:ED "LSDSciencea… 2023-07-28 09:13:11 2023-07-28 11:56:13   -55
+     3 00:95:69:E7:7D:21 "LSDSciencea… 2023-07-28 09:13:15 2023-07-28 11:56:17   -33
+     4 00:90:4C:E6:54:54 "Epigram    … 2023-07-28 09:16:59 2023-07-28 10:21:15   -65
+     5 00:04:35:22:4F:75 "InfiNet    … 2023-07-28 09:46:33 2023-07-28 11:15:49   -83
+     6 00:E9:3A:67:93:E9 "AzureWaveTe… 2023-07-28 10:15:18 2023-07-28 11:55:11   -73
+     7 00:E9:3A:F8:10:C7 "AzureWaveTe… 2023-07-28 10:20:19 2023-07-28 10:20:19   -73
+     8 00:0C:E7:A8:D6:73 "MediaTek   … 2023-07-28 10:22:07 2023-07-28 10:22:08   -67
+     9 00:98:8C:CE:8E:45  <NA>         2023-07-28 10:34:53 2023-07-28 10:35:13   -65
+    10 00:F4:8D:F7:C5:19 "LiteonTechn… 2023-07-28 10:45:04 2023-07-28 11:43:26   -73
+    # ℹ 4 more variables: number_packets <dbl>, bssid <chr>, probed_essi_ds <chr>,
     #   does_not_randomize <lgl>
 
+#Задание 13: Кластеризовать запросы от устройств к точкам доступа по их
+именам (BSSID)
+
 ``` r
-#Задание 13: Кластеризовать запросы от устройств к точкам доступа по их именам (BSSID)
 wifi_station_clustered <- wifi_station_data %>%
   filter(bssid != "(not associated)") %>%
   group_by(bssid) %>%
@@ -976,9 +1067,9 @@ print(wifi_station_clustered)
     # ℹ 64 more rows
     # ℹ 1 more variable: total_observations <int>
 
-``` r
-#Задание 14: Оценка стабильности уровня сигнала внутри кластеров
+###Задание 14: Оценка стабильности уровня сигнала внутри кластеров
 
+``` r
 wifi_station_for_stability <- wifi_station_data %>%
   filter(bssid != "(not associated)", !is.na(power))
 cluster_stability_raw <- wifi_station_for_stability %>%
