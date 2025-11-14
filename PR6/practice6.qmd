@@ -30,10 +30,10 @@ editor:
 
 1.  Импортируйте данные в R. Датасет находится по адресу
     https://storage.yandexcloud.net/iamcth-data/dataset.tar.gz.
-2.  Раскройте датафрейм избавившись от вложенных датафреймов
-3.  Привести датасеты в вид “аккуратных данных”, преобразовать типы
+2.  Привести датасеты в вид “аккуратных данных”, преобразовать типы
     столбцов в соответствии с типом данных
-4.  Просмотрите общую структуру данных с помощью функции glimpse()
+3.  Просмотрите общую структуру данных с помощью функции glimpse()
+4.  Раскройте датафрейм избавившись от вложенных датафреймов
 5.  Минимизируйте количество колонок в датафрейме – уберите колоки с
     единственным значением параметра.
 6.  Какое количество хостов представлено в данном датасете?
@@ -53,13 +53,11 @@ install.packages("dplyr")
 install.packages("tidyr")
 install.packages("xml2")
 install.packages("rvest")
-install.packages("R.utils")
 library(jsonlite)
 library(dplyr)
 library(tidyr)
 library(xml2)
 library(rvest)
-
 ```
 
 ### Импортируйте данные в R.
@@ -70,7 +68,6 @@ local_archive_name <- "dataset.tar.gz"
 if (!file.exists(local_archive_name)) {
   download.file(url = dataset_url, destfile = local_archive_name, mode = "wb")
 }
-
 archive_contents <- untar(tarfile = local_archive_name, list = TRUE)
 json_file_name <- archive_contents[grep("\\.json$", archive_contents)]
 temp_json_dir <- tempdir()
@@ -79,38 +76,6 @@ json_file_path <- file.path(temp_json_dir, json_file_name)
 json_file_conn <- file(json_file_path, open = "r")
 raw_data <- stream_in(json_file_conn)
 close(json_file_conn)
-```
-
-### Раскройте датафрейм избавившись от вложенных датафреймов
-
-```{r}
-list_cols_logical <- sapply(raw_data, is.list)
-list_col_names <- names(raw_data)[list_cols_logical]
-unnested_data <- raw_data %>%
-    unnest(
-      cols = all_of(list_col_names),
-      names_sep = "_",
-      keep_empty = TRUE
-      )
-
-#остались ли вложенные df
-list_cols_after_logical <- sapply(unnested_data, is.list)
-remaining_list_cols <- names(unnested_data)[list_cols_after_logical]
-if (length(remaining_list_cols) > 0) {
-  iteration_count <- 0
-  max_iterations <- 10
-  while (length(remaining_list_cols) > 0 & iteration_count < max_iterations) {
-    unnested_data <- unnested_data %>%
-      unnest(
-        cols = all_of(remaining_list_cols),
-        names_sep = "_",
-        keep_empty = TRUE
-      )
-    list_cols_after_logical <- sapply(unnested_data, is.list)
-    remaining_list_cols <- names(unnested_data)[list_cols_after_logical]
-    iteration_count <- iteration_count + 1
-  }
-}
 ```
 
 ### Привести датасеты в вид “аккуратных данных”, преобразовать типы столбцов в соответствии с типом данных
@@ -127,15 +92,14 @@ is_datetime_char <- function(x) {
   }
   return(FALSE)
 }
-
-potential_datetime_cols <- sapply(unnested_data, is_datetime_char)
-datetime_col_names <- names(unnested_data)[potential_datetime_cols]
+potential_datetime_cols <- sapply(raw_data, is_datetime_char)
+datetime_col_names <- names(raw_data)[potential_datetime_cols]
 if (length(datetime_col_names) > 0) {
   for (col_name in datetime_col_names) {
-    unnested_data[[col_name]] <- tryCatch(
-      as.POSIXct(unnested_data[[col_name]]),
+    raw_data[[col_name]] <- tryCatch(
+      as.POSIXct(raw_data[[col_name]]),
       error = function(e) {
-        return(unnested_data[[col_name]])
+        return(raw_data[[col_name]])
       }
     )
   }
@@ -148,10 +112,10 @@ is_numeric_char <- function(x) {
     FALSE
   }
 }
-potential_numeric_cols <- sapply(unnested_data, is_numeric_char)
-numeric_col_names <- names(unnested_data)[potential_numeric_cols]
+potential_numeric_cols <- sapply(raw_data, is_numeric_char)
+numeric_col_names <- names(raw_data)[potential_numeric_cols]
 if (length(numeric_col_names) > 0) {
-  unnested_data <- unnested_data %>%
+  raw_data <- raw_data %>%
     mutate(
       across(all_of(numeric_col_names), ~as.numeric(as.character(.x)))
     )
@@ -169,14 +133,14 @@ is_logical_char <- function(x) {
     FALSE
   }
 }
-potential_logical_cols <- sapply(unnested_data, is_logical_char)
-logical_col_names <- names(unnested_data)[potential_logical_cols]
+potential_logical_cols <- sapply(raw_data, is_logical_char)
+logical_col_names <- names(raw_data)[potential_logical_cols]
 if (length(logical_col_names) > 0) {
   for (col_name in logical_col_names) {
-    char_vec <- as.character(unnested_data[[col_name]])
+    char_vec <- as.character(raw_data[[col_name]])
     logical_vec <- ifelse(tolower(char_vec) %in% c("true", "1"), TRUE,
                           ifelse(tolower(char_vec) %in% c("false", "0"), FALSE, NA))
-    unnested_data[[col_name]] <- logical_vec
+    raw_data[[col_name]] <- logical_vec
   }
 }
 ```
@@ -184,7 +148,37 @@ if (length(logical_col_names) > 0) {
 ### Просмотрите общую структуру данных с помощью функции glimpse()
 
 ```{r}
-glimpse(unnested_data)
+glimpse(raw_data)
+```
+
+### Раскройте датафрейм избавившись от вложенных датафреймов
+
+```{r}
+list_cols_logical <- sapply(raw_data, is.list)
+list_col_names <- names(raw_data)[list_cols_logical]
+unnested_data <- raw_data %>%
+    unnest(
+      cols = all_of(list_col_names),
+      names_sep = "_",
+      keep_empty = TRUE
+      )
+list_cols_after_logical <- sapply(unnested_data, is.list)
+remaining_list_cols <- names(unnested_data)[list_cols_after_logical]
+if (length(remaining_list_cols) > 0) {
+  iteration_count <- 0
+  max_iterations <- 10
+  while (length(remaining_list_cols) > 0 & iteration_count < max_iterations) {
+    unnested_data <- unnested_data %>%
+      unnest(
+        cols = all_of(remaining_list_cols),
+        names_sep = "_",
+        keep_empty = TRUE
+      )
+    list_cols_after_logical <- sapply(unnested_data, is.list)
+    remaining_list_cols <- names(unnested_data)[list_cols_after_logical]
+    iteration_count <- iteration_count + 1
+  }
+}
 ```
 
 ### Минимизируйте количество колонок в датафрейме – уберите колоки с единственным значением параметра.
@@ -254,11 +248,11 @@ cat("Событий Medium: ",medium_events_count_calc)
 ## Оценка результата
 
 В рамках практческой работы была исследована выгрузка из SIEM-системы
-доброй организации на факт комрометации системы
+доброй организации на факт комрометации системы.
 
 ## Вывод
 
 В практической работе мы изучили структуру журнала системы Windows
 Active Directory, закреили практические навыки использования языка
 программирования R для обработки данных и знания основных функций
-обработки данных экосистемы tidyverse языка R
+обработки данных экосистемы tidyverse языка R.
