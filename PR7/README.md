@@ -43,17 +43,8 @@ install.packages("arrow")
 
     пакет 'arrow' успешно распакован, MD5-суммы проверены
 
-    Warning: не могу удалить прежнюю установку пакета 'arrow'
-
-    Warning in file.copy(savedcopy, lib, recursive = TRUE): проблема с копированием
-    D:\Rlib\00LOCK\arrow\libs\x64\arrow.dll в D:\Rlib\arrow\libs\x64\arrow.dll:
-    Permission denied
-
-    Warning: восстановлен 'arrow'
-
-
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpwdmiB7\downloaded_packages
+        D:\Rtemp\RtmpiOEXNU\downloaded_packages
 
 ``` r
 install.packages("dplyr")
@@ -74,7 +65,7 @@ install.packages("dplyr")
 
 
     Скачанные бинарные пакеты находятся в
-        D:\Rtemp\RtmpwdmiB7\downloaded_packages
+        D:\Rtemp\RtmpiOEXNU\downloaded_packages
 
 ``` r
 library(arrow)
